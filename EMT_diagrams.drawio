@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-28T15:46:32.937Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="7YZ74IKDCRSBjVeKsuyC" version="21.6.9" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-08-28T15:53:34.159Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="5FjZ7CQat9Ajh8A516vn" version="21.6.9" type="github" pages="2">
   <diagram name="userroles" id="rasDofUEgk2x8Y9_TUdu">
     <mxGraphModel dx="1434" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -31,7 +31,7 @@
         <mxCell id="NcEJU8F5eQ85N1rwH00z-9" value="ur_user" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
           <mxGeometry x="40" y="370" width="240" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="NcEJU8F5eQ85N1rwH00z-10" value="+ id: long, PK&#xa;+ date_created: timestamp&#xa;+ date_modified: timestamp&#xa;+ date_deleted: timestamp&#xa;+ email: text, UNIQUE, NOT NULL&#xa;+ password: text&#xa;+ enabled: bool, NOT NULL&#xa;+ ur_person_id: long, FK&#xa;+ confirmation_ur_token_id: long, FK&#xa;+ password_reset_ur_token_id: long, FK" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="NcEJU8F5eQ85N1rwH00z-9" vertex="1">
+        <mxCell id="NcEJU8F5eQ85N1rwH00z-10" value="+ id: long, PK&#xa;+ date_created: timestamp&#xa;+ date_modified: timestamp&#xa;+ date_deleted: timestamp&#xa;+ email: text, UNIQUE, NOT NULL&#xa;+ password: text&#xa;+ enabled: bool, NOT NULL&#xa;+ ur_person_id: long, FK&#xa;+ confirmation_ur_token_id: long, FK&#xa;+ password_reset_ur_token_id: long, FK&#xa;+ balance: double" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="NcEJU8F5eQ85N1rwH00z-9" vertex="1">
           <mxGeometry y="30" width="240" height="180" as="geometry" />
         </mxCell>
         <mxCell id="NcEJU8F5eQ85N1rwH00z-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=ERmany;startFill=0;endArrow=none;endFill=0;" parent="1" source="NcEJU8F5eQ85N1rwH00z-13" target="NcEJU8F5eQ85N1rwH00z-2" edge="1">
