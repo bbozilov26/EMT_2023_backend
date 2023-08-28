@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-28T15:59:46.027Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="Dl2ZVTF7YkEzfoUYqPYY" version="21.6.9" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-08-28T16:04:32.834Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="SFsbwIXWmGBV9fC_AoYT" version="21.6.9" type="github" pages="2">
   <diagram name="userroles" id="rasDofUEgk2x8Y9_TUdu">
     <mxGraphModel dx="1434" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -84,10 +84,13 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="XaTmom0QrmOVDEkwlWpY-1" value="mm_products" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
-          <mxGeometry x="160" y="340" width="240" height="190" as="geometry" />
+        <mxCell id="Xv4ja5mBIWwBTEmVzUfh-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="XaTmom0QrmOVDEkwlWpY-1" target="Xv4ja5mBIWwBTEmVzUfh-5">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="XaTmom0QrmOVDEkwlWpY-2" value="+ id: long, PK&#xa;+ date_created: timestamp&#xa;+ date_modified: timestamp&#xa;+ date_deleted: timestamp&#xa;+ quantity: integer&#xa;+ price: double&#xa;+ image: file&#xa;+ title: varchar(200)&#xa;+ description: varchar(200)" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="XaTmom0QrmOVDEkwlWpY-1" vertex="1">
+        <mxCell id="XaTmom0QrmOVDEkwlWpY-1" value="mm_products" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
+          <mxGeometry x="160" y="410" width="240" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="XaTmom0QrmOVDEkwlWpY-2" value="+ id: long, PK&#xa;+ date_created: timestamp&#xa;+ date_modified: timestamp&#xa;+ date_deleted: timestamp&#xa;+ quantity: integer&#xa;+ price: double&#xa;+ image: file&#xa;+ title: varchar(200)&#xa;+ description: varchar(200)&#xa;+ category: varchar(200), enum" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="XaTmom0QrmOVDEkwlWpY-1" vertex="1">
           <mxGeometry y="30" width="240" height="160" as="geometry" />
         </mxCell>
         <mxCell id="PuRM0Y142JhNYR5v5XaW-3" value="Topic:&lt;br&gt;- History&lt;br&gt;- Art&lt;br&gt;- Computer Science&lt;br&gt;- Math&lt;br&gt;- Geography" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
@@ -167,6 +170,9 @@
             <mxPoint x="350" y="470" as="sourcePoint" />
             <mxPoint x="450" y="370" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="Xv4ja5mBIWwBTEmVzUfh-5" value="Category:&lt;br&gt;- Books&lt;br&gt;- Movies&lt;br&gt;- Music&lt;br&gt;- PC &amp;amp; equipment&lt;br&gt;- Accessories&lt;br&gt;- Mobile phones" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="185" y="250" width="190" height="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
