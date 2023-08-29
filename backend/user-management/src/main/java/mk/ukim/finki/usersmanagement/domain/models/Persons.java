@@ -1,5 +1,6 @@
 package mk.ukim.finki.usersmanagement.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,6 @@ public class Persons extends AbstractEntity<PersonId> {
     private String phoneNumber;
 
     @OneToMany
+    @JsonIgnore
     private List<Users> users;
 }
