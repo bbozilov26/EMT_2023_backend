@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-29T11:57:35.115Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="OhtxjBrCuJOfcjVHduYd" version="21.6.9" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-08-29T12:32:09.963Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="nC9EIglA5uY28Rsb9xbE" version="21.6.9" type="github" pages="2">
   <diagram name="userroles" id="rasDofUEgk2x8Y9_TUdu">
     <mxGraphModel dx="1434" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -132,14 +132,14 @@
         <mxCell id="PuRM0Y142JhNYR5v5XaW-17" value="mm_daily_check_in" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
           <mxGeometry x="1200" y="630" width="240" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="PuRM0Y142JhNYR5v5XaW-18" value="+ id: long, PK&#xa;+ mm_daily_check_ins: long, FK&#xa;+ daily_reward: double&#xa;+ claimed: boolean" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="PuRM0Y142JhNYR5v5XaW-17" vertex="1">
+        <mxCell id="PuRM0Y142JhNYR5v5XaW-18" value="+ id: long, PK&#xa;+ mm_daily_check_ins: long, FK&#xa;+ daily_reward: double&#xa;+ label: varchar(200)&#xa;+ description: varchar(200)" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="PuRM0Y142JhNYR5v5XaW-17" vertex="1">
           <mxGeometry y="30" width="240" height="90" as="geometry" />
         </mxCell>
         <mxCell id="PuRM0Y142JhNYR5v5XaW-20" value="mm_daily_check_ins" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
-          <mxGeometry x="850" y="640" width="240" height="80" as="geometry" />
+          <mxGeometry x="850" y="630" width="240" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="PuRM0Y142JhNYR5v5XaW-21" value="+ id: long, PK&#xa;+ ur_user_id: long, FK" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="PuRM0Y142JhNYR5v5XaW-20" vertex="1">
-          <mxGeometry y="30" width="240" height="50" as="geometry" />
+        <mxCell id="PuRM0Y142JhNYR5v5XaW-21" value="+ id: long, PK&#xa;+ ur_user_id: long, FK&#xa;+ claimed: boolean" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="PuRM0Y142JhNYR5v5XaW-20" vertex="1">
+          <mxGeometry y="30" width="240" height="60" as="geometry" />
         </mxCell>
         <mxCell id="PuRM0Y142JhNYR5v5XaW-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;endArrow=ERmany;endFill=0;" parent="1" source="PuRM0Y142JhNYR5v5XaW-21" target="PuRM0Y142JhNYR5v5XaW-18" edge="1">
           <mxGeometry relative="1" as="geometry" />
