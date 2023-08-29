@@ -27,6 +27,7 @@
 
 	<modules>
 		<module>shared-kernel</module>
+		<module>user-management</module>
 	</modules>
 
 	<packaging>pom</packaging>
