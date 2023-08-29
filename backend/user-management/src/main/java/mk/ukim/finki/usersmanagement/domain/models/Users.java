@@ -34,10 +34,4 @@ public class Users extends AbstractEntity<UserId> {
 
     @OneToMany
     private List<Tokens> tokens;
-
-//    @OneToMany
-//    private List<RatingsAndReviews> ratingsAndReviews;
-
-//    @OneToOne
-//    private ShoppingCart shoppingCart;
 }
