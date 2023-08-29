@@ -28,6 +28,7 @@
 	<modules>
 		<module>shared-kernel</module>
 		<module>user-management</module>
+		<module>quiz-management</module>
 	</modules>
 
 	<packaging>pom</packaging>

@@ -1,5 +1,6 @@
 package mk.ukim.finki.usersmanagement.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,6 @@ public class Users extends AbstractEntity<UserId> {
     private List<UserRoles> userRoles;
 
     @OneToMany
+    @JsonIgnore
     private List<Tokens> tokens;
 }
