@@ -29,6 +29,7 @@
 		<module>shared-kernel</module>
 		<module>user-management</module>
 		<module>quiz-management</module>
+		<module>dailyCheckIns-management</module>
 	</modules>
 
 	<packaging>pom</packaging>
