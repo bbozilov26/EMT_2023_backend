@@ -10,6 +10,7 @@ import mk.ukim.finki.usersmanagement.domain.models.Users;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "mm_user_daily_check_ins", schema = "metamodels")
@@ -19,6 +20,8 @@ import javax.persistence.Table;
 public class UserDailyCheckIns extends AbstractEntity<UserDailyCheckInsId> {
 
     private Boolean claimed;
+    private OffsetDateTime dateCreated;
+    private OffsetDateTime dateModified;
 
     @ManyToOne
     private DailyCheckIns dailyCheckIns;
