@@ -23,7 +23,6 @@ public class Users extends AbstractEntity<UserId> {
     private String password;
     private OffsetDateTime dateCreated;
     private OffsetDateTime dateModified;
-    private OffsetDateTime dateDeleted;
     private Boolean enabled;
     private Double creditBalance;
 

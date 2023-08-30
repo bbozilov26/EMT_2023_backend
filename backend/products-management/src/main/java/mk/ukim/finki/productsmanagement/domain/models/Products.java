@@ -23,7 +23,6 @@ public class Products extends AbstractEntity<ProductId> {
 
     private OffsetDateTime dateCreated;
     private OffsetDateTime dateModified;
-    private OffsetDateTime dateDeleted;
     private Integer quantity;
     private Double price;
     private File image;
