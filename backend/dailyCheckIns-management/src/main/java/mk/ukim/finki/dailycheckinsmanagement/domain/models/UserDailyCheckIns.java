@@ -8,10 +8,8 @@ import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.Users;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
 @Table(name = "mm_user_daily_check_ins", schema = "metamodels")
@@ -20,13 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDailyCheckIns extends AbstractEntity<UserDailyCheckInsId> {
 
-    private Boolean claimed; //TODO: needs to be claimable daily
-                             //      1: as a List ?
-                             //      2: 7 booleans, Monday to Sunday
-                             //      3: enum types: CLAIMED, MISSED, NOT_CLAIMED
+    private Boolean claimed;
 
-    @ManyToMany
-    private List<DailyCheckIns> dailyCheckIns;
+    @ManyToOne
+    private DailyCheckIns dailyCheckIns;
 
     @ManyToOne
     private Users user;

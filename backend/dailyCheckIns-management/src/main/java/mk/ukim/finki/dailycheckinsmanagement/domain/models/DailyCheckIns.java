@@ -1,16 +1,14 @@
 package mk.ukim.finki.dailycheckinsmanagement.domain.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.DailyCheckInId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -24,6 +22,7 @@ public class DailyCheckIns extends AbstractEntity<DailyCheckInId> {
     private String label;
     private String description;
 
-    @ManyToMany
+    @OneToMany
+    @JsonIgnore
     private List<UserDailyCheckIns> userDailyCheckIns;
 }
