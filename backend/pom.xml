@@ -30,6 +30,8 @@
 		<module>user-management</module>
 		<module>quiz-management</module>
 		<module>dailyCheckIns-management</module>
+		<module>products-management</module>
+		<module>orders-management</module>
 	</modules>
 
 	<packaging>pom</packaging>
