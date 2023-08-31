@@ -31,4 +31,6 @@ public interface UserRepository extends JpaRepository<User, UserId> {
                     "(:#{#userFilter.getRole().isEmpty()} = true or lower(r.label) like %:#{#userFilter.getRole()}%)"
     )
     Page<User> findAllPaged(UserDTO userFilter, int enabledCheck, Pageable pageable);
+
+    User findByEmail(String email);
 }

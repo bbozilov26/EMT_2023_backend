@@ -2,6 +2,7 @@ package mk.ukim.finki.usersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
+import mk.ukim.finki.usersmanagement.domain.exceptions.UserAlreadyExistsException;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.domain.models.UserRole;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
@@ -23,6 +24,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final PersonService personService;
     private final UserRoleService userRoleService;
+
+    public User register(UserDTO userDTO){
+        return create(userDTO);
+    }
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -55,6 +60,10 @@ public class UserService {
     }
 
     private User fillProperties(User user, UserDTO userDTO){
+        if(findByEmail(userDTO.getEmail()) != null){
+            throw new UserAlreadyExistsException();
+        }
+
         user.setEmail(user.getEmail());
         user.setPassword(userDTO.getPassword());
         user.setDateCreated(userDTO.getDateCreated());
@@ -75,5 +84,9 @@ public class UserService {
 
     public void delete(UserId id) {
         userRepository.deleteById(id);
+    }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 }
