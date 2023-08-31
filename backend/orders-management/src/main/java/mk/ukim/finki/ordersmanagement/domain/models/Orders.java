@@ -29,6 +29,7 @@ public class Orders extends AbstractEntity<OrderId> {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_user_id")
     private Users user;
 }

@@ -28,8 +28,8 @@ public class QuizQuestions extends AbstractEntity<QuizQuestionId> {
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
-    @OneToOne
-    @JoinColumn(name = "correct_quiz_answer_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "correct_mm_quiz_answer_id")
     private QuizAnswers correctQuizAnswer;
 
     @OneToMany(mappedBy = "quizQuestion", fetch = FetchType.LAZY)

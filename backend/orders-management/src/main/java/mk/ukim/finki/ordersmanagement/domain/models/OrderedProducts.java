@@ -7,9 +7,7 @@ import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderedProductId;
 import mk.ukim.finki.productsmanagement.domain.models.Products;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.File;
 import java.time.OffsetDateTime;
 
@@ -29,6 +27,7 @@ public class OrderedProducts extends AbstractEntity<OrderedProductId> {
     private String description;
     private File image;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mm_product_id")
     private Products product;
 }

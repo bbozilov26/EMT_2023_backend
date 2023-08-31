@@ -7,9 +7,7 @@ import mk.ukim.finki.ordersmanagement.domain.models.ids.ShoppingCartId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.Users;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -23,6 +21,7 @@ public class ShoppingCarts extends AbstractEntity<ShoppingCartId> {
     private OffsetDateTime dateModified;
     private Double totalPrice;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_user_id")
     private Users user;
 }
