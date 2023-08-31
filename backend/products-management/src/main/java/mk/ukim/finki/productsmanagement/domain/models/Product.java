@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Products extends AbstractEntity<ProductId> {
+public class Product extends AbstractEntity<ProductId> {
 
     private OffsetDateTime dateCreated;
     private OffsetDateTime dateModified;

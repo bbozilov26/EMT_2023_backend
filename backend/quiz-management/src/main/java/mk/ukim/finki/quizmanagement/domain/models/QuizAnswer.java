@@ -15,10 +15,10 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuizAnswers extends AbstractEntity<QuizAnswerId> {
+public class QuizAnswer extends AbstractEntity<QuizAnswerId> {
 
     private String description;
 
     @ManyToOne
-    private QuizQuestions quizQuestion;
+    private QuizQuestion quizQuestion;
 }

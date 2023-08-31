@@ -1,10 +1,10 @@
-package mk.ukim.finki.productsmanagement;
+package mk.ukim.finki.ordersmanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductsManagementApplicationTests {
+class OrderManagementApplicationTests {
 
     @Test
     void contextLoads() {

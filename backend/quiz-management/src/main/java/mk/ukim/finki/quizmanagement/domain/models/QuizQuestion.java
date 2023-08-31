@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuizQuestions extends AbstractEntity<QuizQuestionId> {
+public class QuizQuestion extends AbstractEntity<QuizQuestionId> {
 
     private String question;
     private Double reward;
@@ -30,9 +30,9 @@ public class QuizQuestions extends AbstractEntity<QuizQuestionId> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "correct_mm_quiz_answer_id")
-    private QuizAnswers correctQuizAnswer;
+    private QuizAnswer correctQuizAnswer;
 
     @OneToMany(mappedBy = "quizQuestion", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<QuizAnswers> quizAnswers;
+    private List<QuizAnswer> quizAnswers;
 }

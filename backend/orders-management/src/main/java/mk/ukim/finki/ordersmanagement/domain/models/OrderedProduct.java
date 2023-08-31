@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderedProductId;
-import mk.ukim.finki.productsmanagement.domain.models.Products;
+import mk.ukim.finki.productsmanagement.domain.models.Product;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ import java.time.OffsetDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderedProducts extends AbstractEntity<OrderedProductId> {
+public class OrderedProduct extends AbstractEntity<OrderedProductId> {
 
     private OffsetDateTime dateCreated;
     private OffsetDateTime dateModified;
@@ -29,5 +29,5 @@ public class OrderedProducts extends AbstractEntity<OrderedProductId> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mm_product_id")
-    private Products product;
+    private Product product;
 }
