@@ -32,7 +32,7 @@ public class Users extends AbstractEntity<UserId> {
     @ManyToMany
     private List<UserRoles> userRoles;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Tokens> tokens;
 }

@@ -22,7 +22,7 @@ public class DailyCheckIns extends AbstractEntity<DailyCheckInId> {
     private String label;
     private String description;
 
-    @OneToMany
+    @OneToMany(mappedBy = "dailyCheckIns", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<UserDailyCheckIns> userDailyCheckIns;
 }

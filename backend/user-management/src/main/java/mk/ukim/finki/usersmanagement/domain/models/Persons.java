@@ -9,6 +9,7 @@ import mk.ukim.finki.usersmanagement.domain.models.ids.PersonId;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.OffsetDateTime;
@@ -27,7 +28,7 @@ public class Persons extends AbstractEntity<PersonId> {
     private String lastName;
     private String phoneNumber;
 
-    @OneToMany
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Users> users;
 }
