@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.ShoppingCartId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
-import mk.ukim.finki.usersmanagement.domain.models.Users;
+import mk.ukim.finki.usersmanagement.domain.models.User;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -23,5 +23,5 @@ public class ShoppingCarts extends AbstractEntity<ShoppingCartId> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_user_id")
-    private Users user;
+    private User user;
 }

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.models.enums.OrderStatus;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
-import mk.ukim.finki.usersmanagement.domain.models.Users;
+import mk.ukim.finki.usersmanagement.domain.models.User;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -31,5 +31,5 @@ public class Orders extends AbstractEntity<OrderId> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_user_id")
-    private Users user;
+    private User user;
 }

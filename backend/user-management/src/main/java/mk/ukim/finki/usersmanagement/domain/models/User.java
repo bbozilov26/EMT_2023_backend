@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users extends AbstractEntity<UserId> {
+public class User extends AbstractEntity<UserId> {
 
     private String email;
     private String password;
@@ -26,13 +26,15 @@ public class Users extends AbstractEntity<UserId> {
     private Boolean enabled;
     private Double creditBalance;
 
-    @ManyToOne
-    private Persons person;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_person_id")
+    private Person person;
 
-    @ManyToMany
-    private List<UserRoles> userRoles;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<UserRole> userRoles;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Tokens> tokens;
+    private List<Token> tokens;
 }

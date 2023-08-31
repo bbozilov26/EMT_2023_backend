@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.ids.PersonId;
-import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +19,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Persons extends AbstractEntity<PersonId> {
+public class Person extends AbstractEntity<PersonId> {
 
     private OffsetDateTime dateCreated;
     private OffsetDateTime dateModified;
@@ -30,5 +29,5 @@ public class Persons extends AbstractEntity<PersonId> {
 
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Users> users;
+    private List<User> users;
 }

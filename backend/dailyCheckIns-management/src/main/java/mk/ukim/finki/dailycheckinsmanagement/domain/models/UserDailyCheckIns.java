@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.UserDailyCheckInsId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
-import mk.ukim.finki.usersmanagement.domain.models.Users;
+import mk.ukim.finki.usersmanagement.domain.models.User;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -27,5 +27,5 @@ public class UserDailyCheckIns extends AbstractEntity<UserDailyCheckInsId> {
     private DailyCheckIns dailyCheckIns;
 
     @ManyToOne
-    private Users user;
+    private User user;
 }
