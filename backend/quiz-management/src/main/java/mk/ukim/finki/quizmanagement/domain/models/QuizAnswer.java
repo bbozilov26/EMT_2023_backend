@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.quizmanagement.domain.models.ids.QuizAnswerId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mm_quiz_answers", schema = "metamodels")
@@ -19,6 +17,7 @@ public class QuizAnswer extends AbstractEntity<QuizAnswerId> {
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mm_quiz_question_id")
     private QuizQuestion quizQuestion;
 }
