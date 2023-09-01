@@ -1,8 +1,12 @@
 package mk.ukim.finki.usersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.UserDailyCheckInDTO;
+import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
+import mk.ukim.finki.dailycheckinsmanagement.services.impl.UserDailyCheckInsService;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserAlreadyExistsException;
+import mk.ukim.finki.usersmanagement.domain.exceptions.UserNotFoundException;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.domain.models.UserRole;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
@@ -12,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +29,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PersonService personService;
     private final UserRoleService userRoleService;
+    private final UserDailyCheckInsService userDailyCheckInsService;
 
     public User register(UserDTO userDTO){
         return create(userDTO);
@@ -79,6 +85,8 @@ public class UserService {
         );
         user.setUserRoles(userRoles);
 
+        user.setUserDailyCheckIns(userDailyCheckInsService.bindWithUser(user));
+
         return userRepository.save(user);
     }
 
@@ -88,5 +96,21 @@ public class UserService {
 
     public User findByEmail(String email){
         return userRepository.findByEmail(email);
+    }
+
+    public User claimDailyCheckIn(UserDailyCheckInDTO userDailyCheckInDTO){
+        User user = findById(userDailyCheckInDTO.getUserId()).isPresent() ?
+                findById(userDailyCheckInDTO.getUserId()).get()
+                : null;
+
+        if(user == null) throw new UserNotFoundException();
+
+        else {
+            UserDailyCheckIn userDailyCheckIn = userDailyCheckInsService.claimDailyCheckIn(userDailyCheckInDTO);
+            user.setCreditBalance(user.getCreditBalance() + userDailyCheckIn.getDailyCheckIn().getDailyReward());
+            user.setDateModified(OffsetDateTime.now());
+
+            return userRepository.save(user);
+        }
     }
 }

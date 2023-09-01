@@ -17,7 +17,4 @@ public class QuizAnswer extends AbstractEntity<QuizAnswerId> {
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mm_quiz_question_id")
-    private QuizQuestion quizQuestion;
 }

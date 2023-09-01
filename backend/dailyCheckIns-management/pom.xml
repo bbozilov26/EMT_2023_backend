@@ -11,8 +11,8 @@
 	<groupId>mk.ukim.finki</groupId>
 	<artifactId>dailyCheckIns-management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dailyCheckIns-management</name>
-	<description>dailyCheckIns-management</description>
+	<name>dailyCheckIn-management</name>
+	<description>dailyCheckIn-management</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

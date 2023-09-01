@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.ids.PrivilegeId;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ur_roles_privileges", schema = "userroles")
@@ -17,9 +15,11 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class RolePrivilege extends AbstractEntity<PrivilegeId> {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_role_id")
     private Role role;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_privilege_id")
     private Privilege privilege;
 }

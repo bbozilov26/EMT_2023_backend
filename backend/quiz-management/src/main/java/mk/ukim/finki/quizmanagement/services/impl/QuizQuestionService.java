@@ -1,9 +1,11 @@
 package mk.ukim.finki.quizmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.quizmanagement.domain.QuizQuestionNotFoundException;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionDTO;
 import mk.ukim.finki.quizmanagement.domain.models.QuizAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
+import mk.ukim.finki.quizmanagement.domain.models.QuizQuestionAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.ids.QuizQuestionId;
 import mk.ukim.finki.quizmanagement.domain.repositories.QuizQuestionRepository;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,14 @@ import java.util.Optional;
 public class QuizQuestionService {
 
     private final QuizQuestionRepository quizQuestionRepository;
-    private final QuizAnswerService quizAnswerService;
+    private final QuizQuestionAnswerService quizQuestionAnswerService;
 
     public List<QuizQuestion> findAll(){
         return quizQuestionRepository.findAll();
     }
 
     public Optional<QuizQuestion> findById(QuizQuestionId id){
-        return quizQuestionRepository.findById(id);
+        return Optional.ofNullable(quizQuestionRepository.findById(id).orElseThrow(QuizQuestionNotFoundException::new));
     }
 
     public QuizQuestion create(QuizQuestionDTO quizQuestionDTO){
@@ -42,13 +44,16 @@ public class QuizQuestionService {
         quizQuestion.setReward(quizQuestionDTO.getReward());
         quizQuestion.setTopic(quizQuestionDTO.getTopic());
         quizQuestion.setDifficulty(quizQuestionDTO.getDifficulty());
-        quizQuestion.setCorrectQuizAnswer(quizAnswerService.getOrCreate(quizQuestionDTO.getCorrectQuizAnswerDTO()));
 
-        List<QuizAnswer> quizAnswers = new ArrayList<>();
+        quizQuestionRepository.save(quizQuestion);
+
+        quizQuestion.setCorrectQuizAnswer(quizQuestionAnswerService.getOrCreate(quizQuestion, quizQuestionDTO.getCorrectQuizAnswerDTO()));
+
+        List<QuizQuestionAnswer> quizQuestionAnswers = new ArrayList<>();
         quizQuestionDTO.getQuizAnswerDTOs().forEach(quizAnswerDTO ->
-                quizAnswers.add(quizAnswerService.getOrCreate(quizAnswerDTO))
+                quizQuestionAnswers.add(quizQuestionAnswerService.getOrCreate(quizQuestion, quizAnswerDTO))
         );
-        quizQuestion.setQuizAnswers(quizAnswers);
+        quizQuestion.setQuizQuestionAnswers(quizQuestionAnswers);
 
         return quizQuestionRepository.save(quizQuestion);
     }

@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.ids.TokenId;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -22,6 +20,7 @@ public class Token extends AbstractEntity<TokenId> {
     private OffsetDateTime dateCreated;
     private OffsetDateTime dateExpiration;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_user_id")
     private User user;
 }

@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserRoleId;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ur_user_roles")
@@ -17,9 +15,11 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class UserRole extends AbstractEntity<UserRoleId> {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_role_id")
     private Role role;
 }

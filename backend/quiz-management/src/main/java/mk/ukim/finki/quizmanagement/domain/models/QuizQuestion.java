@@ -30,9 +30,9 @@ public class QuizQuestion extends AbstractEntity<QuizQuestionId> {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "correct_mm_quiz_answer_id")
-    private QuizAnswer correctQuizAnswer;
+    private QuizQuestionAnswer correctQuizAnswer;
 
     @OneToMany(mappedBy = "quizQuestion", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<QuizAnswer> quizAnswers;
+    private List<QuizQuestionAnswer> quizQuestionAnswers;
 }

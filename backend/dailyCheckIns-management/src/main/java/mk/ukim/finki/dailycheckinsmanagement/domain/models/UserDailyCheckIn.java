@@ -3,13 +3,11 @@ package mk.ukim.finki.dailycheckinsmanagement.domain.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.UserDailyCheckInsId;
+import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.UserDailyCheckInId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -17,15 +15,17 @@ import java.time.OffsetDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDailyCheckIns extends AbstractEntity<UserDailyCheckInsId> {
+public class UserDailyCheckIn extends AbstractEntity<UserDailyCheckInId> {
 
     private Boolean claimed;
     private OffsetDateTime dateCreated;
     private OffsetDateTime dateModified;
 
-    @ManyToOne
-    private DailyCheckIns dailyCheckIns;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mm_daily_check_ins_id")
+    private DailyCheckIn dailyCheckIn;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ur_user_id")
     private User user;
 }
