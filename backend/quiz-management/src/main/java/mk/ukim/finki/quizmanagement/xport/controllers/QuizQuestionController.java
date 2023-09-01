@@ -18,7 +18,7 @@ public class QuizQuestionController {
 
     private final QuizQuestionService quizQuestionService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<QuizQuestion> findAll(){
         return quizQuestionService.findAll();
     }

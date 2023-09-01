@@ -18,7 +18,7 @@ public class DailyCheckInController {
 
     private final DailyCheckInsService dailyCheckInsService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<DailyCheckIn> findAll(){
         return dailyCheckInsService.findAll();
     }

@@ -1,12 +1,14 @@
 package mk.ukim.finki.usersmanagement.domain.dtos;
 
 import lombok.Data;
+import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
 public class UserDTO {
+    private final UserId id;
     private final String email;
     private final String password;
     private final OffsetDateTime dateCreated;
