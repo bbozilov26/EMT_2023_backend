@@ -49,6 +49,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>mk.ukim.finki</groupId>
+			<artifactId>quiz-management</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
 			<version>2.2.3</version>

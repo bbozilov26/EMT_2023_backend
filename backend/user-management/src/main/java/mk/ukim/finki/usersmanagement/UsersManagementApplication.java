@@ -7,7 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {
         "mk.ukim.finki.usersmanagement",
-        "mk.ukim.finki.dailycheckinsmanagement"
+        "mk.ukim.finki.dailycheckinsmanagement",
+        "mk.ukim.finki.quizmanagement"
 })
 public class UsersManagementApplication {
 

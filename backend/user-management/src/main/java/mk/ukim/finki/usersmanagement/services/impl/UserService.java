@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.dailycheckinsmanagement.services.impl.UserDailyCheckInsService;
+import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
+import mk.ukim.finki.quizmanagement.services.impl.QuizQuestionService;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserAlreadyExistsException;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserNotFoundException;
@@ -30,6 +32,7 @@ public class UserService {
     private final PersonService personService;
     private final UserRoleService userRoleService;
     private final UserDailyCheckInsService userDailyCheckInsService;
+    private final QuizQuestionService quizQuestionService;
 
     public User register(UserDTO userDTO){
         return create(userDTO);
@@ -98,7 +101,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User claimDailyCheckIn(UserDailyCheckInDTO userDailyCheckInDTO){
+    public void claimDailyCheckIn(UserDailyCheckInDTO userDailyCheckInDTO){
         User user = findById(userDailyCheckInDTO.getUserId()).isPresent() ?
                 findById(userDailyCheckInDTO.getUserId()).get()
                 : null;
@@ -110,7 +113,15 @@ public class UserService {
             user.setCreditBalance(user.getCreditBalance() + userDailyCheckIn.getDailyCheckIn().getDailyReward());
             user.setDateModified(OffsetDateTime.now());
 
-            return userRepository.save(user);
+            userRepository.save(user);
         }
+    }
+
+    public void submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
+        User user = findById(quizGivenAnswersDTO.getUserId()).get();
+        Double quizRewards = quizQuestionService.submitQuiz(quizGivenAnswersDTO);
+        user.setCreditBalance(user.getCreditBalance() + quizRewards);
+
+        userRepository.save(user);
     }
 }

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, QuizQuestionId> {
+
+    QuizQuestion findByQuestion(String question);
 }

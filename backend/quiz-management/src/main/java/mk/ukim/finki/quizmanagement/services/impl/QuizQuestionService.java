@@ -2,6 +2,8 @@ package mk.ukim.finki.quizmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.quizmanagement.domain.QuizQuestionNotFoundException;
+import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerDTO;
+import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionDTO;
 import mk.ukim.finki.quizmanagement.domain.models.QuizAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -60,5 +63,23 @@ public class QuizQuestionService {
 
     public void delete(QuizQuestionId id){
         quizQuestionRepository.deleteById(id);
+    }
+
+    public Double submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
+        Double quizReward = 0.0;
+
+        for (Map.Entry<QuizQuestionDTO, QuizAnswerDTO> entry : quizGivenAnswersDTO.getQuizMap().entrySet()){
+            QuizQuestionDTO quizQuestionDTO = entry.getKey();
+            QuizQuestion quizQuestion = quizQuestionRepository.findByQuestion(quizQuestionDTO.getQuestion());
+
+            QuizAnswerDTO quizAnswerDTO = entry.getValue();
+            QuizQuestionAnswer quizQuestionAnswer = quizQuestionAnswerService.getOrCreate(quizQuestion, quizAnswerDTO);
+
+            if(quizQuestion.getCorrectQuizAnswer().equals(quizQuestionAnswer)){
+                quizReward += quizQuestion.getReward();
+            }
+        }
+
+        return quizReward;
     }
 }
