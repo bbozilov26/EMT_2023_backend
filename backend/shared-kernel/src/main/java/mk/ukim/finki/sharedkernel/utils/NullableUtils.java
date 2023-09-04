@@ -1,4 +1,4 @@
-package mk.ukim.finki.usersmanagement.utils;
+package mk.ukim.finki.sharedkernel.utils;
 
 import org.antlr.v4.runtime.misc.NotNull;
 

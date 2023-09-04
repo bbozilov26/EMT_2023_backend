@@ -8,8 +8,8 @@ import java.util.List;
 
 @Data
 public class UserCreationDTO {
-    private final String email;
-    private final String password;
-    private final PersonCreationDTO personDTO;
-    private final List<RoleId> roleIds;
+    private String email;
+    private String password;
+    private PersonCreationDTO personDTO;
+    private List<RoleId> roleIds;
 }

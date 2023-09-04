@@ -1,11 +1,10 @@
 package mk.ukim.finki.quizmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
-import mk.ukim.finki.quizmanagement.domain.QuizQuestionNotFoundException;
+import mk.ukim.finki.quizmanagement.domain.models.exceptions.QuizQuestionNotFoundException;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionDTO;
-import mk.ukim.finki.quizmanagement.domain.models.QuizAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestionAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.ids.QuizQuestionId;

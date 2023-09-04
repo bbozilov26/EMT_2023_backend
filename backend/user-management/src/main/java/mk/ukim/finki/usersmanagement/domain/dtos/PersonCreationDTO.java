@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 
 @Data
 public class PersonCreationDTO {
-    private final String firstName;
-    private final String lastName;
-    private final String phoneNumber;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
 }

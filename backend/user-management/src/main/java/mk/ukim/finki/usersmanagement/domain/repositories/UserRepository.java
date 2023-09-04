@@ -14,21 +14,21 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, UserId> {
 
     @Query(
-            value = "select distinct u from User u \n" +
-                    "left join Person p on u.person.id =  p.id \n" +
-                    "left join UserRole ur on u.id = ur.user.id \n" +
-                    "left join Role r on r.id = ur.role.id \n" +
-                    "where \n" +
-                    "(:#{#userFilter.getEmail().isEmpty()} = true or lower(u.email) like %:#{#userFilter.getEmail()}%) \n" +
-                    "and \n" +
-                    "(:#{#enabledCheck == -1} = true or  (:#{#enabledCheck == 0} = true and u.enabled = false) or (:#{#enabledCheck == 1} = true and u.enabled = true)) \n" +
-                    "and \n" +
-                    "(:#{#userFilter.getFirstName().isEmpty()} = true or lower(p.firstName) like %:#{#userFilter.getFirstName()}%) \n" +
-                    "and \n" +
-                    "(:#{#userFilter.getLastName().isEmpty()} = true or lower(p.lastName) like %:#{#userFilter.getLastName()}%) \n" +
-                    "and \n" +
-                    "(:#{#userFilter.getPhoneNumber().isEmpty()} = true or lower(p.phoneNumber) like %:#{#userFilter.getPhoneNumber()}%) \n" +
-                    "and \n" +
+            value = "select distinct u from User u " +
+                    "left join Person p on u.person.id =  p.id " +
+                    "left join UserRole ur on u.id = ur.user.id " +
+                    "left join Role r on r.id = ur.role.id " +
+                    "where " +
+                    "(:#{#userFilter.getEmail().isEmpty()} = true or lower(u.email) like %:#{#userFilter.getEmail()}%) " +
+                    "and " +
+                    "(:#{#enabledCheck == -1} = true or  (:#{#enabledCheck == 0} = true and u.enabled = false) or (:#{#enabledCheck == 1} = true and u.enabled = true)) " +
+                    "and " +
+                    "(:#{#userFilter.getFirstName().isEmpty()} = true or lower(p.firstName) like %:#{#userFilter.getFirstName()}%) " +
+                    "and " +
+                    "(:#{#userFilter.getLastName().isEmpty()} = true or lower(p.lastName) like %:#{#userFilter.getLastName()}%) " +
+                    "and " +
+                    "(:#{#userFilter.getPhoneNumber().isEmpty()} = true or lower(p.phoneNumber) like %:#{#userFilter.getPhoneNumber()}%) " +
+                    "and " +
                     "(:#{#userFilter.getRole().isEmpty()} = true or lower(r.label) like %:#{#userFilter.getRole()}%)"
     )
     Page<User> findAllPaged(UserFilter userFilter, int enabledCheck, Pageable pageable);

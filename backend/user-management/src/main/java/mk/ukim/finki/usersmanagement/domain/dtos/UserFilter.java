@@ -1,7 +1,7 @@
 package mk.ukim.finki.usersmanagement.domain.dtos;
 
 import lombok.Data;
-import mk.ukim.finki.usersmanagement.utils.NullableUtils;
+import mk.ukim.finki.sharedkernel.utils.NullableUtils;
 
 @Data
 public class UserFilter {
