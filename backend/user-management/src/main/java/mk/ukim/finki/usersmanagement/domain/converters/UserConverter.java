@@ -3,7 +3,6 @@ package mk.ukim.finki.usersmanagement.domain.converters;
 import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.models.User;
-import org.springframework.data.util.NullableUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +18,6 @@ public class UserConverter {
         return new UserDTO(
                 user.getId(),
                 user.getEmail(),
-                user.getPassword(),
                 user.getDateCreated(),
                 user.getDateModified(),
                 user.getEnabled(),

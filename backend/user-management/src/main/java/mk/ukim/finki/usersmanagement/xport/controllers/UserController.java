@@ -2,7 +2,9 @@ package mk.ukim.finki.usersmanagement.xport.controllers;
 
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.usersmanagement.domain.converters.UserConverter;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.springframework.data.domain.Page;
@@ -34,19 +36,19 @@ public class UserController {
     @PostMapping("/all-paged")
     public Page<UserDTO> findAllPaged(
             @PageableDefault Pageable pageable,
-            @RequestBody UserDTO userFilter
+            @RequestBody UserFilter userFilter
     ) {
         return userService.findAllPaged(userFilter, pageable).map(userConverter::toUserDTO);
     }
 
     @PostMapping("/create")
-    public UserDTO create(@RequestBody UserDTO userDTO){
-        return userConverter.toUserDTO(userService.create(userDTO));
+    public UserDTO create(@RequestBody UserCreationDTO userCreationDTO){
+        return userConverter.toUserDTO(userService.create(userCreationDTO));
     }
 
     @PutMapping("/edit/{id}")
-    public UserDTO edit(@PathVariable UserId id, @RequestBody UserDTO userDTO){
-        return userConverter.toUserDTO(userService.edit(id, userDTO));
+    public UserDTO edit(@PathVariable UserId id, @RequestBody UserCreationDTO userCreationDTO){
+        return userConverter.toUserDTO(userService.edit(id, userCreationDTO));
     }
 
     @DeleteMapping("/delete/{id}")

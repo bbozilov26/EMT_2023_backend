@@ -1,6 +1,7 @@
 package mk.ukim.finki.usersmanagement.domain.repositories;
 
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import org.springframework.data.domain.Page;
@@ -30,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, UserId> {
                     "and \n" +
                     "(:#{#userFilter.getRole().isEmpty()} = true or lower(r.label) like %:#{#userFilter.getRole()}%)"
     )
-    Page<User> findAllPaged(UserDTO userFilter, int enabledCheck, Pageable pageable);
+    Page<User> findAllPaged(UserFilter userFilter, int enabledCheck, Pageable pageable);
 
     User findByEmail(String email);
 }

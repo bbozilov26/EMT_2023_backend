@@ -1,6 +1,7 @@
 package mk.ukim.finki.usersmanagement.xport.controllers;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.security.exceptions.PasswordsNotTheSameException;
@@ -18,7 +19,7 @@ public class RegisterController {
     private final UserService userService;
 
     @PostMapping
-    public User registerUser(@RequestBody UserDTO userDTO) {
+    public User registerUser(@RequestBody UserCreationDTO userDTO) {
         return this.userService.register(userDTO);
 
 //        try {

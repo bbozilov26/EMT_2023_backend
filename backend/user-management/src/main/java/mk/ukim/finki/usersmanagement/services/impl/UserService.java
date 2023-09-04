@@ -6,7 +6,9 @@ import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.dailycheckinsmanagement.services.impl.UserDailyCheckInsService;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
 import mk.ukim.finki.quizmanagement.services.impl.QuizQuestionService;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserAlreadyExistsException;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserNotFoundException;
 import mk.ukim.finki.usersmanagement.domain.models.User;
@@ -34,7 +36,7 @@ public class UserService {
     private final UserDailyCheckInsService userDailyCheckInsService;
     private final QuizQuestionService quizQuestionService;
 
-    public User register(UserDTO userDTO){
+    public User register(UserCreationDTO userDTO){
         return create(userDTO);
     }
 
@@ -42,49 +44,54 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Page<User> findAllPaged(UserDTO userDTO, Pageable pageable) {
+    public Page<User> findAllPaged(UserFilter userFilter, Pageable pageable) {
         int enabledCheck=-1;
 
-        if (userDTO.getEnabled() != null) {
-            if (userDTO.getEnabled().equals(true)) {
+        if (userFilter.getEnabled() != null) {
+            if (userFilter.getEnabled().equals(true)) {
                 enabledCheck = 1;
-            } else if (userDTO.getEnabled().equals(false)) {
+            } else if (userFilter.getEnabled().equals(false)) {
                 enabledCheck = 0;
             }
         }
 
-        return userRepository.findAllPaged(userDTO, enabledCheck, pageable);
+        return userRepository.findAllPaged(userFilter, enabledCheck, pageable);
     }
 
     public Optional<User> findById(UserId id) {
         return userRepository.findById(id);
     }
 
-    public User create(UserDTO userDTO) {
-        return fillProperties(new User(), userDTO);
+    public User create(UserCreationDTO userDTO) {
+        User user = new User();
+        user.setDateCreated(OffsetDateTime.now());
+        user.setEnabled(true);
+        user.setCreditBalance(0.0);
+
+        return fillProperties(user, userDTO);
     }
 
-    public User edit(UserId id, UserDTO userDTO) {
+    public User edit(UserId id, UserCreationDTO userDTO) {
         return fillProperties(findById(id).get(), userDTO);
     }
 
-    private User fillProperties(User user, UserDTO userDTO){
+    private User fillProperties(User user, UserCreationDTO userDTO){
         if(findByEmail(userDTO.getEmail()) != null){
             throw new UserAlreadyExistsException();
         }
 
         user.setEmail(user.getEmail());
         user.setPassword(userDTO.getPassword());
-        user.setDateCreated(userDTO.getDateCreated());
-        user.setDateModified(userDTO.getDateModified());
-        user.setEnabled(userDTO.getEnabled());
-        user.setCreditBalance(userDTO.getCreditBalance());
-        user.setPerson(personService.getOrCreate(userDTO.getPersonDTO()));
+        user.setDateModified(OffsetDateTime.now());
+        user.setPerson(user.getPerson() == null ?
+                personService.createOrUpdate(null, userDTO.getPersonDTO())
+                : personService.createOrUpdate(user.getPerson(), userDTO.getPersonDTO())
+        );
 
         userRepository.save(user);
         List<UserRole> userRoles = new ArrayList<>();
-        userDTO.getRoleDTO().forEach(roleDTO ->
-                userRoles.add(userRoleService.getOrCreate(user, roleDTO))
+        userDTO.getRoleIds().forEach(roleId ->
+                userRoles.add(userRoleService.getOrCreate(user, roleId))
         );
         user.setUserRoles(userRoles);
 

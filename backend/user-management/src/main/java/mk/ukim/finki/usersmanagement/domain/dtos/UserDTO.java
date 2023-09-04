@@ -10,7 +10,6 @@ import java.util.List;
 public class UserDTO {
     private final UserId id;
     private final String email;
-    private final String password;
     private final OffsetDateTime dateCreated;
     private final OffsetDateTime dateModified;
     private final Boolean enabled;
