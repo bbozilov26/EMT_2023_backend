@@ -22,8 +22,8 @@ public class Order extends AbstractEntity<OrderId> {
     private OffsetDateTime dateModified;
     private OffsetDateTime dateClosed;
     private Double totalPrice;
-    private String orderId; //TODO: UUID random generated string number, ex. AliExpress, Amazon
-    private String trackingNumber; //TODO: UUID random generated string, ex. AliExpress, Amazon
+    private String orderId;
+    private String trackingNumber;
     private String description;
 
     @Enumerated(EnumType.STRING)

@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -51,14 +53,21 @@ public class UserDailyCheckInsService {
         return userDailyCheckInsRepository.save(userDailyCheckIn);
     }
 
-    public void resetDailyCheckInWeekly(){
-        List<UserDailyCheckIn> userDailyCheckIns = userDailyCheckInsRepository.findAll();
+    public List<UserDailyCheckIn> resetDailyCheckInWeekly(User user){
+        List<UserDailyCheckIn> userDailyCheckIns = userDailyCheckInsRepository.findAllByUserId(user.getId());
+        UserDailyCheckIn firstDailyCheckIn = userDailyCheckIns.stream()
+                .filter(userDailyCheckIn ->
+                        userDailyCheckIn.getClaimed() &&
+                                userDailyCheckIn.getDailyCheckIn().getLabel().equals("DAILY_CHECK_IN_MONDAY"))
+                .findFirst()
+                .get();
 
-        userDailyCheckIns.forEach(userDailyCheckIn -> {
-            userDailyCheckIn.setClaimed(false);
-            userDailyCheckIn.setDateModified(OffsetDateTime.now());
-            userDailyCheckInsRepository.save(userDailyCheckIn);
-        });
+        if(ChronoUnit.DAYS.between(firstDailyCheckIn.getDateModified().toLocalDate(), OffsetDateTime.now().toLocalDate()) == 7){
+            userDailyCheckInsRepository.deleteAllById(userDailyCheckIns.stream().map(UserDailyCheckIn::getId).collect(Collectors.toList()));
+            return bindWithUser(user);
+        }
+
+        return userDailyCheckIns;
     }
 
     public List<UserDailyCheckIn> findAllClaimedByUser(User user){

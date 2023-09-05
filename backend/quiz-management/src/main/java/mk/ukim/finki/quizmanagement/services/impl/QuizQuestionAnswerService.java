@@ -1,6 +1,7 @@
 package mk.ukim.finki.quizmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerCreationDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerDTO;
 import mk.ukim.finki.quizmanagement.domain.models.QuizAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
@@ -17,7 +18,7 @@ public class QuizQuestionAnswerService {
     private final QuizQuestionAnswerRepository quizQuestionAnswerRepository;
     private final QuizAnswerService quizAnswerService;
 
-    public QuizQuestionAnswer getOrCreate(QuizQuestion quizQuestion, QuizAnswerDTO quizAnswerDTO){
+    public QuizQuestionAnswer getOrCreate(QuizQuestion quizQuestion, QuizAnswerCreationDTO quizAnswerDTO){
         QuizAnswer quizAnswer = quizAnswerService.getOrCreate(quizAnswerDTO);
         QuizQuestionAnswer quizQuestionAnswer = quizQuestionAnswerRepository.findByQuizQuestionAndQuizAnswer(quizQuestion, quizAnswer);
 
@@ -34,5 +35,10 @@ public class QuizQuestionAnswerService {
         quizQuestionAnswer.setQuizAnswer(quizAnswer);
 
         return quizQuestionAnswerRepository.save(quizQuestionAnswer);
+    }
+
+    public QuizQuestionAnswer findByQuestionAndAnswer(QuizQuestion question, QuizAnswerDTO answerDTO){
+        QuizAnswer quizAnswer = quizAnswerService.findByDescription(answerDTO.getDescription());
+        return quizQuestionAnswerRepository.findByQuizQuestionAndQuizAnswer(question, quizAnswer);
     }
 }

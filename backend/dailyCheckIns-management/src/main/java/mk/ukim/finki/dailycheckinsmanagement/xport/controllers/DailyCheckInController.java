@@ -1,6 +1,8 @@
 package mk.ukim.finki.dailycheckinsmanagement.xport.controllers;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.dailycheckinsmanagement.domain.converters.DailyCheckInConverter;
+import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.DailyCheckInCreationDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.DailyCheckInDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.DailyCheckIn;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.DailyCheckInId;
@@ -17,25 +19,26 @@ import java.util.Optional;
 public class DailyCheckInController {
 
     private final DailyCheckInsService dailyCheckInsService;
+    private final DailyCheckInConverter dailyCheckInConverter;
 
     @GetMapping("/all")
-    public List<DailyCheckIn> findAll(){
-        return dailyCheckInsService.findAll();
+    public List<DailyCheckInDTO> findAll(){
+        return dailyCheckInConverter.toDTOList(dailyCheckInsService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Optional<DailyCheckIn> findById(@PathVariable DailyCheckInId id){
-        return dailyCheckInsService.findById(id);
+    public DailyCheckInDTO findById(@PathVariable DailyCheckInId id){
+        return dailyCheckInConverter.toDTO(dailyCheckInsService.findById(id).get());
     }
 
     @PostMapping("/create")
-    public DailyCheckIn create(@RequestBody DailyCheckInDTO dailyCheckInDTO){
-        return dailyCheckInsService.create(dailyCheckInDTO);
+    public DailyCheckInDTO create(@RequestBody DailyCheckInCreationDTO dailyCheckInDTO){
+        return dailyCheckInConverter.toDTO(dailyCheckInsService.create(dailyCheckInDTO));
     }
 
     @PutMapping("/edit/{id}")
-    public DailyCheckIn edit(@PathVariable DailyCheckInId id, @RequestBody DailyCheckInDTO dailyCheckInDTO){
-        return dailyCheckInsService.edit(id, dailyCheckInDTO);
+    public DailyCheckInDTO edit(@PathVariable DailyCheckInId id, @RequestBody DailyCheckInCreationDTO dailyCheckInDTO){
+        return dailyCheckInConverter.toDTO(dailyCheckInsService.edit(id, dailyCheckInDTO));
     }
 
     @DeleteMapping("/{id}")

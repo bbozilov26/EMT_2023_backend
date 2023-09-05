@@ -1,6 +1,8 @@
 package mk.ukim.finki.quizmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionCreationDTO;
+import mk.ukim.finki.quizmanagement.domain.models.QuizAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.exceptions.QuizQuestionNotFoundException;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
@@ -33,15 +35,15 @@ public class QuizQuestionService {
         return Optional.ofNullable(quizQuestionRepository.findById(id).orElseThrow(QuizQuestionNotFoundException::new));
     }
 
-    public QuizQuestion create(QuizQuestionDTO quizQuestionDTO){
+    public QuizQuestion create(QuizQuestionCreationDTO quizQuestionDTO){
         return fillProperties(new QuizQuestion(), quizQuestionDTO);
     }
 
-    public QuizQuestion edit(QuizQuestionId id, QuizQuestionDTO quizQuestionDTO){
+    public QuizQuestion edit(QuizQuestionId id, QuizQuestionCreationDTO quizQuestionDTO){
         return fillProperties(findById(id).get(), quizQuestionDTO);
     }
 
-    private QuizQuestion fillProperties(QuizQuestion quizQuestion, QuizQuestionDTO quizQuestionDTO){
+    private QuizQuestion fillProperties(QuizQuestion quizQuestion, QuizQuestionCreationDTO quizQuestionDTO){
         quizQuestion.setQuestion(quizQuestionDTO.getQuestion());
         quizQuestion.setReward(quizQuestionDTO.getReward());
         quizQuestion.setTopic(quizQuestionDTO.getTopic());
@@ -72,7 +74,7 @@ public class QuizQuestionService {
             QuizQuestion quizQuestion = quizQuestionRepository.findByQuestion(quizQuestionDTO.getQuestion());
 
             QuizAnswerDTO quizAnswerDTO = entry.getValue();
-            QuizQuestionAnswer quizQuestionAnswer = quizQuestionAnswerService.getOrCreate(quizQuestion, quizAnswerDTO);
+            QuizQuestionAnswer quizQuestionAnswer = quizQuestionAnswerService.findByQuestionAndAnswer(quizQuestion, quizAnswerDTO);
 
             if(quizQuestion.getCorrectQuizAnswer().equals(quizQuestionAnswer)){
                 quizReward += quizQuestion.getReward();

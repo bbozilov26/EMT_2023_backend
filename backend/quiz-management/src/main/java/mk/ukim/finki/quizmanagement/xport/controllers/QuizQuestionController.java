@@ -1,6 +1,8 @@
 package mk.ukim.finki.quizmanagement.xport.controllers;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.quizmanagement.domain.converters.QuizQuestionConverter;
+import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionCreationDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionDTO;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
 import mk.ukim.finki.quizmanagement.domain.models.ids.QuizQuestionId;
@@ -17,25 +19,26 @@ import java.util.Optional;
 public class QuizQuestionController {
 
     private final QuizQuestionService quizQuestionService;
+    private final QuizQuestionConverter quizQuestionConverter;
 
     @GetMapping("/all")
-    public List<QuizQuestion> findAll(){
-        return quizQuestionService.findAll();
+    public List<QuizQuestionDTO> findAll(){
+        return quizQuestionConverter.toDTOList(quizQuestionService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Optional<QuizQuestion> findById(@PathVariable QuizQuestionId id){
-        return quizQuestionService.findById(id);
+    public QuizQuestionDTO findById(@PathVariable QuizQuestionId id){
+        return quizQuestionConverter.toDTO(quizQuestionService.findById(id).get());
     }
 
     @PostMapping("/create")
-    public QuizQuestion create(@RequestBody QuizQuestionDTO quizQuestionDTO){
-        return quizQuestionService.create(quizQuestionDTO);
+    public QuizQuestionDTO create(@RequestBody QuizQuestionCreationDTO quizQuestionDTO){
+        return quizQuestionConverter.toDTO(quizQuestionService.create(quizQuestionDTO));
     }
 
     @PutMapping("/edit/{id}")
-    public QuizQuestion edit(@PathVariable QuizQuestionId id, @RequestBody QuizQuestionDTO quizQuestionDTO){
-        return quizQuestionService.edit(id, quizQuestionDTO);
+    public QuizQuestionDTO edit(@PathVariable QuizQuestionId id, @RequestBody QuizQuestionCreationDTO quizQuestionDTO){
+        return quizQuestionConverter.toDTO(quizQuestionService.edit(id, quizQuestionDTO));
     }
 
     @DeleteMapping("/delete/{id}")

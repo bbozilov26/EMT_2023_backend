@@ -30,4 +30,8 @@ public class OrderedProduct extends AbstractEntity<OrderedProductId> {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mm_product_id")
     private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mm_shopping_cart_id")
+    private ShoppingCart shoppingCart;
 }

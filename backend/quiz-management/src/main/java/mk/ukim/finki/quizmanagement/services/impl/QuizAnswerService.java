@@ -1,6 +1,7 @@
 package mk.ukim.finki.quizmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerCreationDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerDTO;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionDTO;
 import mk.ukim.finki.quizmanagement.domain.models.QuizAnswer;
@@ -26,22 +27,22 @@ public class QuizAnswerService {
         return quizAnswerRepository.findByDescription(description);
     }
 
-    public QuizAnswer getOrCreate(QuizAnswerDTO quizAnswerDTO){
+    public QuizAnswer getOrCreate(QuizAnswerCreationDTO quizAnswerDTO){
         QuizAnswer quizAnswer = findByDescription(quizAnswerDTO.getDescription());
 
         if(quizAnswer != null) return quizAnswer;
         else return create(new QuizAnswer(), quizAnswerDTO);
     }
 
-    public QuizAnswer create(QuizAnswer quizAnswer, QuizAnswerDTO quizAnswerDTO){
+    public QuizAnswer create(QuizAnswer quizAnswer, QuizAnswerCreationDTO quizAnswerDTO){
         return fillProperties(quizAnswer, quizAnswerDTO);
     }
 
-    public QuizAnswer edit(QuizAnswerId id, QuizAnswerDTO quizAnswerDTO){
+    public QuizAnswer edit(QuizAnswerId id, QuizAnswerCreationDTO quizAnswerDTO){
         return fillProperties(findById(id).get(), quizAnswerDTO);
     }
 
-    public QuizAnswer fillProperties(QuizAnswer quizAnswer, QuizAnswerDTO quizAnswerDTO){
+    public QuizAnswer fillProperties(QuizAnswer quizAnswer, QuizAnswerCreationDTO quizAnswerDTO){
         quizAnswer.setDescription(quizAnswerDTO.getDescription());
 
         return quizAnswerRepository.save(quizAnswer);

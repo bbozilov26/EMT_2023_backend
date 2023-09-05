@@ -4,7 +4,6 @@ import lombok.Data;
 import mk.ukim.finki.quizmanagement.domain.models.ids.QuizAnswerId;
 
 @Data
-public class QuizAnswerDTO {
-    private final QuizAnswerId id;
-    private final String description;
+public class QuizAnswerCreationDTO {
+    private String description;
 }
