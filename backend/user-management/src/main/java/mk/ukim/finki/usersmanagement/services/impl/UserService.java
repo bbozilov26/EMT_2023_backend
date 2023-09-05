@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.dailycheckinsmanagement.services.impl.UserDailyCheckInsService;
+import mk.ukim.finki.ordersmanagement.services.impl.ShoppingCartService;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
 import mk.ukim.finki.quizmanagement.services.impl.QuizQuestionService;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
@@ -35,6 +36,7 @@ public class UserService {
     private final UserRoleService userRoleService;
     private final UserDailyCheckInsService userDailyCheckInsService;
     private final QuizQuestionService quizQuestionService;
+    private final ShoppingCartService shoppingCartService;
 
     public User register(UserCreationDTO userDTO){
         return create(userDTO);
@@ -67,6 +69,8 @@ public class UserService {
         user.setDateCreated(OffsetDateTime.now());
         user.setEnabled(true);
         user.setCreditBalance(0.0);
+        userRepository.save(user);
+        shoppingCartService.create(user, userDTO.getShoppingCartCreationDTO());
 
         return fillProperties(user, userDTO);
     }

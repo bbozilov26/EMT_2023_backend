@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderConverter {
     private final UserConverter userConverter;
+    private final OrderedProductConverter orderedProductConverter;
 
     public OrderDTO toOrderDTO(Order order){
         return new OrderDTO(
@@ -26,7 +27,8 @@ public class OrderConverter {
                 order.getTrackingNumber(),
                 order.getDescription(),
                 order.getOrderStatus(),
-                NullableUtils.getIfNotNull(order.getUser(), userConverter::toUserDTO)
+                NullableUtils.getIfNotNull(order.getUser(), userConverter::toUserDTO),
+                orderedProductConverter.toDTOList(order.getOrderedProducts())
         );
     }
 

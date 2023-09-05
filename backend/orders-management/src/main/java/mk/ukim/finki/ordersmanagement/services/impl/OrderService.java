@@ -2,6 +2,7 @@ package mk.ukim.finki.ordersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.dtos.OrderCreationDTO;
+import mk.ukim.finki.ordersmanagement.domain.dtos.OrderDTO;
 import mk.ukim.finki.ordersmanagement.domain.models.Order;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.domain.repositories.OrderRepository;
@@ -76,11 +77,12 @@ public class OrderService {
         return trackingNumber;
     }
 
-    public void cancelOrConfirmOrder(OrderId id){
+    public Order cancelOrConfirmOrder(OrderId id, OrderCreationDTO orderCreationDTO){
         Order order = findById(id).get();
+        order.setOrderStatus(orderCreationDTO.getOrderStatus());
         order.setDateClosed(OffsetDateTime.now());
 
-        orderRepository.save(order);
+        return orderRepository.save(order);
     }
 
     public void deleteOrderHistory(OrderId id){

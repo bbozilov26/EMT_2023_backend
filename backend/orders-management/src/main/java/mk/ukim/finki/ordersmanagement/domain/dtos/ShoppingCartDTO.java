@@ -14,6 +14,6 @@ public class ShoppingCartDTO {
     private final OffsetDateTime dateCreated;
     private final OffsetDateTime dateModified;
     private final Double totalPrice;
-    private final List<OrderedProductId> orderedProductIds;
+    private final List<OrderedProductDTO> orderedProductDTOs;
     private final UserId userId;
 }

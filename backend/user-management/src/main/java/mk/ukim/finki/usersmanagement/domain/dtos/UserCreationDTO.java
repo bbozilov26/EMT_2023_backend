@@ -1,6 +1,7 @@
 package mk.ukim.finki.usersmanagement.domain.dtos;
 
 import lombok.Data;
+import mk.ukim.finki.ordersmanagement.domain.dtos.ShoppingCartCreationDTO;
 import mk.ukim.finki.usersmanagement.domain.models.ids.RoleId;
 
 import java.time.OffsetDateTime;
@@ -12,4 +13,5 @@ public class UserCreationDTO {
     private String password;
     private PersonCreationDTO personDTO;
     private List<RoleId> roleIds;
+    private ShoppingCartCreationDTO shoppingCartCreationDTO;
 }
