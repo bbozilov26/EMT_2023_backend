@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 //import mk.ukim.finki.emt.productscatalog.domain.models.RatingsAndReviews;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.sharedkernel.utils.NullableUtils;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;

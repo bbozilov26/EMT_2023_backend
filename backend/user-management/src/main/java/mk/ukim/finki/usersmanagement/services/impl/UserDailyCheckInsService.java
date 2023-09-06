@@ -1,18 +1,17 @@
-package mk.ukim.finki.dailycheckinsmanagement.services.impl;
+package mk.ukim.finki.usersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
-import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.UserDailyCheckInDTO;
+import mk.ukim.finki.dailycheckinsmanagement.services.impl.DailyCheckInsService;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.DailyCheckIn;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
-import mk.ukim.finki.dailycheckinsmanagement.domain.repositories.UserDailyCheckInsRepository;
-import mk.ukim.finki.usersmanagement.domain.exceptions.UserNotFoundException;
+import mk.ukim.finki.usersmanagement.domain.models.UserDailyCheckIn;
+import mk.ukim.finki.usersmanagement.domain.repositories.UserDailyCheckInsRepository;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

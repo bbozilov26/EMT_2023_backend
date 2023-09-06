@@ -1,14 +1,12 @@
 package mk.ukim.finki.usersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
-import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.UserDailyCheckInDTO;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
-import mk.ukim.finki.dailycheckinsmanagement.services.impl.UserDailyCheckInsService;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
+import mk.ukim.finki.usersmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.ordersmanagement.services.impl.ShoppingCartService;
 import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
 import mk.ukim.finki.quizmanagement.services.impl.QuizQuestionService;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
-import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
 import mk.ukim.finki.usersmanagement.domain.exceptions.InvalidUsernameOrPasswordException;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserAlreadyExistsException;
