@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 //import mk.ukim.finki.emt.productscatalog.domain.models.RatingsAndReviews;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.sharedkernel.utils.NullableUtils;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
@@ -30,6 +29,7 @@ public class User extends AbstractEntity<UserId> {
     private OffsetDateTime dateModified;
     private Boolean enabled;
     private Double creditBalance;
+    private Double creditToSpend;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_person_id")
@@ -46,6 +46,14 @@ public class User extends AbstractEntity<UserId> {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<UserDailyCheckIn> userDailyCheckIns;
+
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<UserOrder> userOrders;
+//
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<UserOrderedProduct> userOrderedProducts;
 
     @JsonIgnore
     public List<Role> getRoles() {

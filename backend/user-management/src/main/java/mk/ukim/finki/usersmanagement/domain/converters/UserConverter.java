@@ -22,6 +22,7 @@ public class UserConverter {
                 user.getDateModified(),
                 user.getEnabled(),
                 user.getCreditBalance(),
+                user.getCreditToSpend(),
                 personConverter.toPersonDTO(user.getPerson()),
                 roleConverter.toRoleDTOList(user.getUserRoles())
         );

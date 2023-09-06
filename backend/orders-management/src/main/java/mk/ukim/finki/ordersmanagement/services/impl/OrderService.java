@@ -2,7 +2,6 @@ package mk.ukim.finki.ordersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.dtos.OrderCreationDTO;
-import mk.ukim.finki.ordersmanagement.domain.dtos.OrderDTO;
 import mk.ukim.finki.ordersmanagement.domain.models.Order;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.domain.repositories.OrderRepository;
@@ -39,6 +38,7 @@ public class OrderService {
         order.setDateCreated(OffsetDateTime.now());
         order.setOrderId(generateOrderID());
         order.setTrackingNumber(generateTrackingNumber());
+        order.setUser(userService.findById(orderCreationDTO.getUserId()).get());
 
         return fillProperties(order, orderCreationDTO);
     }
@@ -52,7 +52,6 @@ public class OrderService {
         order.setTotalPrice(orderCreationDTO.getTotalPrice());
         order.setDescription(orderCreationDTO.getDescription());
         order.setOrderStatus(orderCreationDTO.getOrderStatus());
-        order.setUser(userService.findById(orderCreationDTO.getUserId()).get());
 
         return orderRepository.save(order);
     }

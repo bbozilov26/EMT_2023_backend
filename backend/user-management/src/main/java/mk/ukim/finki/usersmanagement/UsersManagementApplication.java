@@ -5,10 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {
-        "mk.ukim.finki.dailycheckinsmanagement",
-        "mk.ukim.finki.ordersmanagement"
-})
 public class UsersManagementApplication {
 
     public static void main(String[] args) {

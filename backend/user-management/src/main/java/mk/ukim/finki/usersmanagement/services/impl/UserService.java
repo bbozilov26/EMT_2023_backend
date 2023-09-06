@@ -1,14 +1,9 @@
 package mk.ukim.finki.usersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
-import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.UserDailyCheckInDTO;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
-import mk.ukim.finki.dailycheckinsmanagement.services.impl.UserDailyCheckInsService;
-import mk.ukim.finki.ordersmanagement.services.impl.ShoppingCartService;
-import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
-import mk.ukim.finki.quizmanagement.services.impl.QuizQuestionService;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
+import mk.ukim.finki.usersmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
-import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
 import mk.ukim.finki.usersmanagement.domain.exceptions.InvalidUsernameOrPasswordException;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserAlreadyExistsException;
@@ -41,8 +36,6 @@ public class UserService implements UserDetailsService {
     private final PersonService personService;
     private final UserRoleService userRoleService;
     private final UserDailyCheckInsService userDailyCheckInsService;
-    private final QuizQuestionService quizQuestionService;
-    private final ShoppingCartService shoppingCartService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User register(UserCreationDTO userDTO){
@@ -61,6 +54,10 @@ public class UserService implements UserDetailsService {
             throw new UserAlreadyExistsException(email);
 
         return create(userDTO);
+    }
+
+    public void save(User user){
+        userRepository.save(user);
     }
 
     public List<User> findAll() {
@@ -91,9 +88,9 @@ public class UserService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
         user.setCreditBalance(0.0);
+        user.setCreditToSpend(0.0);
         user.setDateCreated(OffsetDateTime.now());
         userRepository.save(user);
-        shoppingCartService.create(user, userDTO.getShoppingCartCreationDTO());
 
         return fillProperties(user, userDTO);
     }
@@ -143,14 +140,6 @@ public class UserService implements UserDetailsService {
 
             userRepository.save(user);
         }
-    }
-
-    public void submitQuiz(UserId userId, QuizGivenAnswersDTO quizGivenAnswersDTO){
-        User user = findById(userId).get();
-        Double quizRewards = quizQuestionService.submitQuiz(quizGivenAnswersDTO);
-        user.setCreditBalance(user.getCreditBalance() + quizRewards);
-
-        userRepository.save(user);
     }
 
     @Override
