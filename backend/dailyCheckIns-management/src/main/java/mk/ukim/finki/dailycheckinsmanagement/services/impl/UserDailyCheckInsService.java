@@ -26,13 +26,16 @@ public class UserDailyCheckInsService {
 
     public List<UserDailyCheckIn> bindWithUser(User user){
         List<DailyCheckIn> dailyCheckIns = dailyCheckInsService.findAll();
-        List<UserDailyCheckIn> userDailyCheckIns = new ArrayList<>();
+        List<UserDailyCheckIn> userDailyCheckIns = user.getUserDailyCheckIns();
+        if(userDailyCheckIns.isEmpty()) {
+            dailyCheckIns.forEach(dailyCheckIn ->
+                    userDailyCheckIns.add(this.create(new UserDailyCheckIn(), user, dailyCheckIn))
+            );
 
-        dailyCheckIns.forEach(dailyCheckIn ->
-                userDailyCheckIns.add(this.create(new UserDailyCheckIn(), user, dailyCheckIn))
-        );
-
-        return userDailyCheckIns;
+            return userDailyCheckIns;
+        } else {
+            return user.getUserDailyCheckIns();
+        }
     }
 
     public UserDailyCheckIn create(UserDailyCheckIn userDailyCheckIn, User user, DailyCheckIn dailyCheckIn){

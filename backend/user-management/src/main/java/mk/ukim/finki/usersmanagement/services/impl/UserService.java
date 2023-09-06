@@ -145,8 +145,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
-        User user = findById(quizGivenAnswersDTO.getUserId()).get();
+    public void submitQuiz(UserId userId, QuizGivenAnswersDTO quizGivenAnswersDTO){
+        User user = findById(userId).get();
         Double quizRewards = quizQuestionService.submitQuiz(quizGivenAnswersDTO);
         user.setCreditBalance(user.getCreditBalance() + quizRewards);
 
