@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.security.exceptions.AccessForbiddenException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;

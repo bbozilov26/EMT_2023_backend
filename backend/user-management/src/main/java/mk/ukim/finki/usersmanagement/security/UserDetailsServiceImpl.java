@@ -3,6 +3,7 @@ package mk.ukim.finki.usersmanagement.security;
 import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.usersmanagement.domain.models.Role;
 import mk.ukim.finki.usersmanagement.domain.models.User;
+import mk.ukim.finki.usersmanagement.domain.models.UserRole;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
