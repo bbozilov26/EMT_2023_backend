@@ -1,6 +1,6 @@
 package mk.ukim.finki.sharedkernel.utils;
 
-import org.antlr.v4.runtime.misc.NotNull;
+import com.sun.istack.NotNull;
 
 import java.util.function.Function;
 import java.util.function.Supplier;

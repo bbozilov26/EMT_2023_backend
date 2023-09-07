@@ -20,6 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, ProductId> {
             "and " +
             "(:#{#filter.title} is null or p.title like %:#{#filter.title}%) " +
             "and " +
-            "(:#{#filter.category.toString()} is null or lower(p.category) like #{#filter.category}) ")
+            "(:#{#filter.category.toString()} is null or lower(p.category) like :#{#filter.category}) ")
     Page<Product> findAllPaged(ProductFilter filter, Pageable pageable);
 }

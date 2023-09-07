@@ -10,7 +10,7 @@ import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "mm_daily_check_ins", schema = "metamodels")
+@Table(name = "mm_daily_check_ins")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

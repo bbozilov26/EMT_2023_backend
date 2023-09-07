@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "ur_persons", schema = "userroles")
+@Table(name = "ur_persons")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

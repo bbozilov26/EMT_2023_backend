@@ -15,7 +15,7 @@ import java.io.File;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "mm_products", schema = "metamodels")
+@Table(name = "mm_products")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
