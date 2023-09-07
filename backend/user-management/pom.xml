@@ -57,12 +57,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>mk.ukim.finki</groupId>-->
-<!--			<artifactId>orders-management</artifactId>-->
-<!--			<version>0.0.1-SNAPSHOT</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
@@ -76,7 +70,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>5.7.4</version>
+			<version>5.5.0</version>
 		</dependency>
 	</dependencies>
 

@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface OrderedProductRepository extends JpaRepository<OrderedProduct, OrderedProductId> {
 
-    @Query("select op from OrderedProduct op where op.id = :id and op.user.id = :shoppingCartId")
+    @Query("select op from OrderedProduct op where op.id = :id and op.user.id = :userId")
     OrderedProduct findByIdAndUserId(OrderedProductId id, UserId userId);
 
     OrderedProduct findByProductAndUser(Product product, User shoppingCart);

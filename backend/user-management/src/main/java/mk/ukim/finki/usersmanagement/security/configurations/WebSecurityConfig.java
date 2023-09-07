@@ -5,6 +5,7 @@ import mk.ukim.finki.usersmanagement.security.CustomUsernamePasswordAuthenticati
 import mk.ukim.finki.usersmanagement.security.filters.JWTAuthenticationFilter;
 import mk.ukim.finki.usersmanagement.security.filters.JWTAuthorizationFilter;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -12,14 +13,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,7 +41,6 @@ import static mk.ukim.finki.usersmanagement.security.SecurityConstants.*;
 public class WebSecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
-    private final CustomUsernamePasswordAuthenticationProvider authenticationProvider;
     private final UserService userService;
     private final AuthenticationConfiguration authConfiguration;
 
@@ -69,7 +67,6 @@ public class WebSecurityConfig {
         http
                 .addFilter(authorizationFilter())
                 .addFilter(authenticationFilter())
-                .authenticationManager(authenticationManager())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
