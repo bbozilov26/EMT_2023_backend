@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.DailyCheckIn;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserDailyCheckInId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;

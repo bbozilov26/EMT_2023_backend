@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,5 +76,9 @@ public class UserDailyCheckInsService {
 
     public List<UserDailyCheckIn> findAllClaimedByUser(User user){
         return userDailyCheckInsRepository.findAllByUserAndClaimedIsTrue(user);
+    }
+
+    public List<UserDailyCheckIn> findAllByClaimedIsTrueOrderByIdAndUserAsc(){
+        return userDailyCheckInsRepository.findAllByClaimedIsTrueOrderByIdAndUserAsc();
     }
 }

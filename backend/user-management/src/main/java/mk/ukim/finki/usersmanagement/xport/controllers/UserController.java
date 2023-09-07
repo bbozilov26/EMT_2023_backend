@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import mk.ukim.finki.usersmanagement.domain.converters.UserConverter;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,4 +57,11 @@ public class UserController {
     public void delete(@PathVariable UserId id){
         userService.delete(id);
     }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    @PostMapping("/reset-daily-check-ins")
+    public void resetDailyCheckIns(){
+        userService.resetDailyCheckIns();
+    }
+
 }

@@ -24,8 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -140,6 +142,10 @@ public class UserService implements UserDetailsService {
 
             userRepository.save(user);
         }
+    }
+
+    public void resetDailyCheckIns(){
+        userRepository.findAll().forEach(userDailyCheckInsService::resetDailyCheckInWeekly);
     }
 
     @Override
