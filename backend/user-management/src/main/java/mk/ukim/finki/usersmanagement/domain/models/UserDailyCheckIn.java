@@ -1,17 +1,17 @@
-package mk.ukim.finki.dailycheckinsmanagement.domain.models;
+package mk.ukim.finki.usersmanagement.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.UserDailyCheckInId;
+import mk.ukim.finki.dailycheckinsmanagement.domain.models.DailyCheckIn;
+import mk.ukim.finki.usersmanagement.domain.models.ids.UserDailyCheckInId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
-import mk.ukim.finki.usersmanagement.domain.models.User;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "mm_user_daily_check_ins", schema = "metamodels")
+@Table(name = "mm_users_daily_check_ins")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

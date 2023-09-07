@@ -1,23 +1,24 @@
 package mk.ukim.finki.usersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
-import mk.ukim.finki.dailycheckinsmanagement.domain.dtos.UserDailyCheckInDTO;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
-import mk.ukim.finki.dailycheckinsmanagement.services.impl.UserDailyCheckInsService;
-import mk.ukim.finki.ordersmanagement.services.impl.ShoppingCartService;
-import mk.ukim.finki.quizmanagement.domain.dtos.QuizGivenAnswersDTO;
-import mk.ukim.finki.quizmanagement.services.impl.QuizQuestionService;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
+import mk.ukim.finki.usersmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
-import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
+import mk.ukim.finki.usersmanagement.domain.exceptions.InvalidUsernameOrPasswordException;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserAlreadyExistsException;
 import mk.ukim.finki.usersmanagement.domain.exceptions.UserNotFoundException;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.domain.models.UserRole;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import mk.ukim.finki.usersmanagement.domain.repositories.UserRepository;
+import mk.ukim.finki.usersmanagement.security.exceptions.PasswordsDoNotMatchException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,17 +30,34 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Transactional
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PersonService personService;
     private final UserRoleService userRoleService;
     private final UserDailyCheckInsService userDailyCheckInsService;
-    private final QuizQuestionService quizQuestionService;
-    private final ShoppingCartService shoppingCartService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User register(UserCreationDTO userDTO){
+        String email = userDTO.getEmail();
+        String password = userDTO.getPassword();
+        String repeatPassword = userDTO.getRepeatPassword();
+
+        if (email == null || email.isEmpty()
+                || password == null || password.isEmpty())
+            throw new InvalidUsernameOrPasswordException();
+
+        if (!password.equals(repeatPassword))
+            throw new PasswordsDoNotMatchException();
+
+        if(this.userRepository.findByEmail(email).isPresent())
+            throw new UserAlreadyExistsException(email);
+
         return create(userDTO);
+    }
+
+    public void save(User user){
+        userRepository.save(user);
     }
 
     public List<User> findAll() {
@@ -66,11 +84,13 @@ public class UserService {
 
     public User create(UserCreationDTO userDTO) {
         User user = new User();
-        user.setDateCreated(OffsetDateTime.now());
+        user.setEmail(user.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
         user.setCreditBalance(0.0);
+        user.setCreditToSpend(0.0);
+        user.setDateCreated(OffsetDateTime.now());
         userRepository.save(user);
-        shoppingCartService.create(user, userDTO.getShoppingCartCreationDTO());
 
         return fillProperties(user, userDTO);
     }
@@ -80,12 +100,6 @@ public class UserService {
     }
 
     private User fillProperties(User user, UserCreationDTO userDTO){
-        if(findByEmail(userDTO.getEmail()) != null){
-            throw new UserAlreadyExistsException();
-        }
-
-        user.setEmail(user.getEmail());
-        user.setPassword(userDTO.getPassword());
         user.setDateModified(OffsetDateTime.now());
         user.setPerson(user.getPerson() == null ?
                 personService.createOrUpdate(null, userDTO.getPersonDTO())
@@ -109,7 +123,7 @@ public class UserService {
     }
 
     public User findByEmail(String email){
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).get();
     }
 
     public void claimDailyCheckIn(UserDailyCheckInDTO userDailyCheckInDTO){
@@ -128,11 +142,8 @@ public class UserService {
         }
     }
 
-    public void submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
-        User user = findById(quizGivenAnswersDTO.getUserId()).get();
-        Double quizRewards = quizQuestionService.submitQuiz(quizGivenAnswersDTO);
-        user.setCreditBalance(user.getCreditBalance() + quizRewards);
-
-        userRepository.save(user);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return (UserDetails) userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

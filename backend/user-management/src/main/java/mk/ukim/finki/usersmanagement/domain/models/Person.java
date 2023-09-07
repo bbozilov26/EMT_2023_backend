@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "ur_persons", schema = "userroles")
+@Table(name = "ur_persons")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,4 +30,23 @@ public class Person extends AbstractEntity<PersonId> {
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<User> users;
+
+    @JsonIgnore
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+
+        if (firstName != null) {
+            sb.append(firstName);
+
+            if (lastName != null) {
+                sb.append(" ");
+            }
+        }
+
+        if (lastName != null) {
+            sb.append(lastName);
+        }
+
+        return sb.toString();
+    }
 }

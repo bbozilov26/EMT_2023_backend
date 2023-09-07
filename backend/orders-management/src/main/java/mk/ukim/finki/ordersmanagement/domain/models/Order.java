@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "mm_orders", schema = "metamodels")
+@Table(name = "mm_orders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +31,7 @@ public class Order extends AbstractEntity<OrderId> {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_user_id")
     private User user;
 

@@ -2,10 +2,7 @@ package mk.ukim.finki.ordersmanagement.domain.dtos;
 
 import lombok.Data;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderedProductId;
-import mk.ukim.finki.ordersmanagement.domain.models.ids.ShoppingCartId;
 import mk.ukim.finki.productsmanagement.domain.dtos.ProductDTO;
-import mk.ukim.finki.productsmanagement.domain.models.ids.ProductId;
-import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 
 import java.io.File;
 import java.time.OffsetDateTime;

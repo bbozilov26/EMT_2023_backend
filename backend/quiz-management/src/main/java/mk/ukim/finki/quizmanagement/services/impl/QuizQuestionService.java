@@ -11,6 +11,8 @@ import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestionAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.ids.QuizQuestionId;
 import mk.ukim.finki.quizmanagement.domain.repositories.QuizQuestionRepository;
+import mk.ukim.finki.usersmanagement.domain.models.User;
+import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class QuizQuestionService {
 
     private final QuizQuestionRepository quizQuestionRepository;
     private final QuizQuestionAnswerService quizQuestionAnswerService;
+    private final UserService userService;
 
     public List<QuizQuestion> findAll(){
         return quizQuestionRepository.findAll();
@@ -66,7 +69,7 @@ public class QuizQuestionService {
         quizQuestionRepository.deleteById(id);
     }
 
-    public Double submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
+    public void submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
         Double quizReward = 0.0;
 
         for (Map.Entry<QuizQuestionDTO, QuizAnswerDTO> entry : quizGivenAnswersDTO.getQuizMap().entrySet()){
@@ -81,6 +84,9 @@ public class QuizQuestionService {
             }
         }
 
-        return quizReward;
+        User user = userService.findById(quizGivenAnswersDTO.getUserId()).get();
+        user.setCreditBalance(user.getCreditBalance() + quizReward);
+
+        userService.save(user);
     }
 }

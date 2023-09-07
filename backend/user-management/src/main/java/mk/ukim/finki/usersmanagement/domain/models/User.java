@@ -5,16 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 //import mk.ukim.finki.emt.productscatalog.domain.models.RatingsAndReviews;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
+import mk.ukim.finki.sharedkernel.utils.NullableUtils;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "ur_users", schema = "userroles")
+@Table(name = "ur_users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +29,7 @@ public class User extends AbstractEntity<UserId> {
     private OffsetDateTime dateModified;
     private Boolean enabled;
     private Double creditBalance;
+    private Double creditToSpend;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_person_id")
@@ -42,4 +46,40 @@ public class User extends AbstractEntity<UserId> {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<UserDailyCheckIn> userDailyCheckIns;
+
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<UserOrder> userOrders;
+//
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<UserOrderedProduct> userOrderedProducts;
+
+    @JsonIgnore
+    public List<Role> getRoles() {
+        if (userRoles == null) {
+            return new ArrayList<>();
+        }
+
+        return userRoles.stream().map(UserRole::getRole).collect(Collectors.toList());
+    }
+
+    @JsonIgnore
+    public List<Privilege> getPrivileges() {
+        return userRoles.stream().
+                map(UserRole::getRole).
+                flatMap(r -> r.getRolePrivileges().stream()).
+                map(RolePrivilege::getPrivilege).
+                distinct().collect(Collectors.toList());
+    }
+
+    @JsonIgnore
+    public String getFullName() {
+        return NullableUtils.getIfNotNull(person, Person::getFullName, () -> "");
+    }
+
+    @JsonIgnore
+    public void setPassword(String password, PasswordEncoder encoder) {
+        this.password = encoder.encode(password);
+    }
 }

@@ -1,4 +1,4 @@
-package mk.ukim.finki.dailycheckinsmanagement.domain.dtos;
+package mk.ukim.finki.usersmanagement.domain.dtos;
 
 import lombok.Data;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.DailyCheckInId;

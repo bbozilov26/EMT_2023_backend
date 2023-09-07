@@ -1,8 +1,8 @@
-package mk.ukim.finki.dailycheckinsmanagement.domain.repositories;
+package mk.ukim.finki.usersmanagement.domain.repositories;
 
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.UserDailyCheckIn;
+import mk.ukim.finki.usersmanagement.domain.models.UserDailyCheckIn;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.DailyCheckInId;
-import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.UserDailyCheckInId;
+import mk.ukim.finki.usersmanagement.domain.models.ids.UserDailyCheckInId;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import org.springframework.data.jpa.repository.JpaRepository;
