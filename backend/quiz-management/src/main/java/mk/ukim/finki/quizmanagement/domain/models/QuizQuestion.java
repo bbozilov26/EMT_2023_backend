@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "mm_quiz_questions")
+@Table(name = "mm_quiz_questions", schema = "metamodels")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

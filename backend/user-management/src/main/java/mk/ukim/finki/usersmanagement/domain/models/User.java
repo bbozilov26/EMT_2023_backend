@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "ur_users")
+@Table(name = "ur_users", schema = "userroles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

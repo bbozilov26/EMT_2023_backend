@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "ur_tokens")
+@Table(name = "ur_tokens", schema = "userroles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

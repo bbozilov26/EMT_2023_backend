@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "ur_roles")
+@Table(name = "ur_roles", schema = "userroles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

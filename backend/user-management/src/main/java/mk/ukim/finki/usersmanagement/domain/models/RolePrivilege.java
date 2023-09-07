@@ -9,7 +9,7 @@ import mk.ukim.finki.usersmanagement.domain.models.ids.PrivilegeId;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ur_roles_privileges")
+@Table(name = "ur_roles_privileges", schema = "userroles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
