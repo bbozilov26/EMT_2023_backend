@@ -1,6 +1,7 @@
 package mk.ukim.finki.usersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.dailycheckinsmanagement.domain.models.constants.DailyCheckInConstants;
 import mk.ukim.finki.dailycheckinsmanagement.services.impl.DailyCheckInsService;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.DailyCheckIn;
@@ -60,7 +61,7 @@ public class UserDailyCheckInsService {
         UserDailyCheckIn firstDailyCheckIn = userDailyCheckIns.stream()
                 .filter(userDailyCheckIn ->
                         userDailyCheckIn.getClaimed() &&
-                                userDailyCheckIn.getDailyCheckIn().getLabel().equals("DAILY_CHECK_IN_MONDAY"))
+                                userDailyCheckIn.getDailyCheckIn().getLabel().equals(DailyCheckInConstants.MONDAY))
                 .findFirst()
                 .get();
 
