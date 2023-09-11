@@ -1,131 +1,189 @@
-create or replace function userroles.find_privilege_id_by_name(input_privilege varchar(80))
-    returns bigint
-    language sql
-begin
-    declare new_id bigint;
-    select id into new_id from userroles.UR_PRIVILEGE where privilege = input_privilege;
-    return new_id;
-end;
+create or replace function daily_check_ins.find_daily_check_in_id_by_label(_label text) returns bigint as
+$$
+declare
+    _id bigint;
 
-create or replace procedure userroles.create_privilege_if_not_exists(in input_description varchar(5000), in input_label varchar(5000), in input_privilege varchar(80))
-    language sql
-    modifies sql data
 begin
-    if not exists(select id from userroles.UR_PRIVILEGE where privilege = input_privilege) then
-        insert into userroles.UR_PRIVILEGE(description, label, privilege) values (input_description, input_label, input_privilege);
-    else
-        update userroles.UR_PRIVILEGE
-        set description = input_description,
-            label = input_label,
-        where privilege = input_privilege;
+    select id into _id
+    from daily_check_ins.mm_daily_check_in
+    where label = _label;
+
+    return _id;
+end
+$$ language plpgsql;
+
+create or replace function daily_check_ins.create_daily_check_in_if_not_exists(_label text, _description text, _daily_reward double precision) returns void as
+$$
+begin
+    if not exists(select id from daily_check_ins.mm_daily_check_in where label = _label) then
+        insert into daily_check_ins.mm_daily_check_in(label, description, daily_reward)
+        values (_label, _description, _daily_reward);
     end if;
-end;
+end
 
-call userroles.create_privilege_if_not_exists('Reads users', 'READ_USERS', 'READ_USERS');
-call userroles.create_privilege_if_not_exists('Manages users', 'MANAGE_USERS', 'MANAGE_USERS');
-call userroles.create_privilege_if_not_exists('Reads orders', 'READ_ORDERS', 'READ_ORDERS');
-call userroles.create_privilege_if_not_exists('Manages orders', 'MANAGE_ORDERS', 'MANAGE_ORDERS');
-call userroles.create_privilege_if_not_exists('Reads quiz', 'READ_QUIZ', 'READ_QUIZ');
-call userroles.create_privilege_if_not_exists('Manages quiz', 'MANAGE_QUIZ', 'MANAGE_QUIZ');
-call userroles.create_privilege_if_not_exists('Reads daily check ins', 'READ_DAILY_CHECK_INS', 'READ_DAILY_CHECK_INS');
-call userroles.create_privilege_if_not_exists('Manages daily check ins', 'MANAGE_DAILY_CHECK_INS', 'MANAGE_DAILY_CHECK_INS');
-call userroles.create_privilege_if_not_exists('Reads products', 'READ_PRODUCTS', 'READ_PRODUCTS');
-call userroles.create_privilege_if_not_exists('Manages products', 'MANAGE_PRODUCTS', 'MANAGE_PRODUCTS');
-create or replace function userroles.find_role_id_by_name(input_role varchar(80))
-    returns bigint
-    language sql
-begin
-    declare new_id bigint;
-    select id into new_id from userroles.UR_ROLE where role = input_role;
-    return new_id;
-end;
+$$ language plpgsql;
 
-create or replace procedure userroles.create_role_if_not_exists(in input_label varchar(5000), in input_role varchar(80))
-    language sql
-    modifies sql data
+select daily_check_ins.create_daily_check_in_if_not_exists('DAY_1', 'First day check in', 10.0);
+select daily_check_ins.create_daily_check_in_if_not_exists('DAY_2', 'Second day check in', 25.0);
+select daily_check_ins.create_daily_check_in_if_not_exists('DAY_3', 'Third day check in', 40.0);
+select daily_check_ins.create_daily_check_in_if_not_exists('DAY_4', 'Fourth day check in', 55.0);
+select daily_check_ins.create_daily_check_in_if_not_exists('DAY_5', 'Fifth day check in', 70.0);
+select daily_check_ins.create_daily_check_in_if_not_exists('DAY_6', 'Sixth day check in', 85.0);
+select daily_check_ins.create_daily_check_in_if_not_exists('DAY_7', 'Seventh day check in', 100.0);create or replace function userroles.find_privilege_id_by_name(_label text) returns bigint as
+$$
+declare
+    _id bigint;
+
 begin
-    if not exists(select id from userroles.UR_ROLE where role = input_role) then
-        insert into userroles.UR_ROLE(label, role) values (input_label, input_role);
-    else
-        update userroles.UR_ROLE
-            set label = input_label
-        where role = input_role;
+    select id into _id
+    from userroles.ur_privilege
+    where label = _label;
+
+    return _id;
+end
+$$ language plpgsql;
+
+create or replace function userroles.create_privilege_if_not_exists(_privilege text, _label text) returns void as
+$$
+begin
+
+    if not exists(select id from userroles.ur_privilege where privilege = _privilege) then
+        insert into userroles.ur_privilege(privilege, label)
+        values (_privilege, _label);
     end if;
-end;
 
-call userroles.create_role_if_not_exists('Super administrator', 'ROLE_SUPER_ADMIN');
-call userroles.create_role_if_not_exists('Administrator', 'ROLE_ADMIN');
-call userroles.create_role_if_not_exists('Customer', 'ROLE_CUSTOMER');
-create or replace procedure userroles.create_role_privilege_if_not_exists(in input_role_id bigint, in input_privilege_id bigint)
-    language sql
-    modifies sql data
+end
+
+$$ language plpgsql;
+
+select userroles.create_privilege_if_not_exists('Reads users', 'READ_USERS');
+select userroles.create_privilege_if_not_exists('Manages users', 'MANAGE_USERS');
+select userroles.create_privilege_if_not_exists('Reads orders', 'READ_ORDERS');
+select userroles.create_privilege_if_not_exists('Manages orders', 'MANAGE_ORDERS');
+select userroles.create_privilege_if_not_exists('Reads quiz', 'READ_QUIZ');
+select userroles.create_privilege_if_not_exists('Manages quiz', 'MANAGE_QUIZ');
+select userroles.create_privilege_if_not_exists('Reads daily check ins', 'READ_DAILY_CHECK_INS');
+select userroles.create_privilege_if_not_exists('Manages daily check ins', 'MANAGE_DAILY_CHECK_INS');
+select userroles.create_privilege_if_not_exists('Reads products', 'READ_PRODUCTS');
+select userroles.create_privilege_if_not_exists('Manages products', 'MANAGE_PRODUCTS');
+create or replace function userroles.find_role_id_by_name(_label text) returns bigint as
+$$
+declare
+    _id bigint;
+
 begin
-    if not exists(select id from userroles.UR_ROLE_PRIVILEGE where ur_role_id = input_role_id and ur_privilege_id = input_privilege_id) then
-        insert into userroles.ur_role_privilege(ur_role_id, ur_privilege_id) values (input_role_id, input_privilege_id);
+    select id into _id
+    from userroles.ur_role
+    where label = _label;
+
+    return _id;
+end
+$$ language plpgsql;
+
+create or replace function userroles.create_role_if_not_exists(_role text, _label text) returns void as
+$$
+begin
+    if not exists(select id from userroles.ur_role where role = _role) then
+        insert into userroles.ur_role(role, label)
+        values (_role, _label);
     end if;
-end;
+end
+
+$$ language plpgsql;
+
+select userroles.create_role_if_not_exists('Super administrator', 'ROLE_SUPER_ADMIN');
+select userroles.create_role_if_not_exists('Administrator', 'ROLE_ADMIN');
+select userroles.create_role_if_not_exists('Customer', 'ROLE_CUSTOMER');
+create or replace function userroles.create_role_privilege_if_not_exists(_role_id bigint, _privilege_id bigint) returns void as
+$$
+begin
+    if not exists(select id from userroles.ur_role_privilege where ur_role_id = _role_id and ur_privilege_id = _privilege_id) then
+        insert into userroles.ur_role_privilege(ur_role_id, ur_privilege_id)
+        values (_role_id, _privilege_id);
+    end if;
+end
+
+$$ language plpgsql;
 
 -- Super administrator privileges
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_USERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_ORDERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_QUIZ'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_PRODUCTS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_DAILY_CHECK_INS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_USERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_ORDERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_QUIZ'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_PRODUCTS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_DAILY_CHECK_INS'));
 
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_USERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_ORDERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_QUIZ'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_PRODUCTS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_DAILY_CHECK_INS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_USERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_ORDERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_QUIZ'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_PRODUCTS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_SUPER_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_DAILY_CHECK_INS'));
 
 -- Administrator privileges
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_USERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_ORDERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_QUIZ'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_PRODUCTS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_DAILY_CHECK_INS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_USERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_ORDERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_QUIZ'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_PRODUCTS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_DAILY_CHECK_INS'));
 
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_USERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_ORDERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_QUIZ'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_PRODUCTS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_DAILY_CHECK_INS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_USERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_ORDERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_QUIZ'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_PRODUCTS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_ADMIN'),userroles.FIND_PRIVILEGE_ID_BY_NAME('MANAGE_DAILY_CHECK_INS'));
 
 -- Customer privileges
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_ORDERS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_QUIZ'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_PRODUCTS'));
-call userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_DAILY_CHECK_INS'));create or replace procedure userroles.create_person(in input_first_name varchar(80), in input_last_name varchar(80), in input_phone_number varchar(80), out person_id bigint)
-    modifies sql data
-begin
-    select id into person_id from new table (
-        insert into userroles.UR_PERSON(date_created, date_modified, first_name, last_name, phone_number)
-        values (current_timestamp, current_timestamp, input_first_name, input_last_name, input_phone_number)
-        );
-end;
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_ORDERS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_QUIZ'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_PRODUCTS'));
+select userroles.create_role_privilege_if_not_exists(userroles.FIND_ROLE_ID_BY_NAME('ROLE_CUSTOMER'),userroles.FIND_PRIVILEGE_ID_BY_NAME('READ_DAILY_CHECK_INS'));create or replace function userroles.create_person(_first_name text, _last_name text, _phone_number text) returns bigint as
+$$
+declare
+    _id bigint;
 
-create or replace type str_array as varchar(80) array[80];
-create or replace procedure userroles.create_user_if_not_exists(in input_email varchar(80), in input_password varchar(500), in input_first_name varchar(80),
-                                                                in input_last_name varchar(80), in input_phone_number varchar(80), in input_role varchar(250))
-    language sql
-    modifies sql data
 begin
-    declare user_id, person_id bigint;
 
-    if not exists(select id from userroles.ur_user where email = lower(input_email)) then
-        call userroles.create_person(input_first_name, input_last_name, input_phone_number, person_id);
+    insert into userroles.ur_person(date_created, date_modified, first_name, last_name, phone_number)
+    values(now(), now(), _first_name, _last_name, _phone_number)
+    returning id into _id;
+
+    return _id;
+
+end
+
+$$ language plpgsql;
+
+create or replace function userroles.create_user_if_not_exists(_email text, _password text, _first_name text, _last_name text, _phone_number text, _roles text[], _daily_check_ins text[]) returns void as
+$$
+declare
+    _user_id bigint;
+    _role text;
+    _person_id bigint;
+    _daily_check_in text;
+begin
+
+    if not exists(select id from userroles.ur_user where email = lower(_email)) then
+        _person_id = userroles.create_person(_first_name, _last_name, _phone_number);
+
         insert into userroles.ur_user(email, password, enabled, date_created, date_modified, ur_person_id)
-        values (input_email, input_password, true, current_timestamp, current_timestamp, person_id);
-        select id into user_id from userroles.UR_USER;
+        values (_email, _password, true, now(), now(), _person_id)
+        returning id into _user_id;
 
-        insert into userroles.UR_USER_ROLE(ur_user_id, ur_role_id)
-        values (user_id, userroles.FIND_ROLE_ID_BY_NAME(input_role));
+        foreach _role in array _roles loop
+                insert into userroles.ur_user_role(ur_user_id, ur_role_id)
+                values (_user_id, userroles.find_role_id_by_name(_role));
+            end loop;
+
+        foreach _daily_check_in in array _daily_check_ins loop
+                insert into daily_check_ins.mm_user_daily_check_in(ur_user_id, mm_daily_check_in_id)
+                values (_user_id, daily_check_ins.find_daily_check_in_id_by_label(_daily_check_in));
+            end loop;
+
     end if;
-end;
 
-begin
-    call userroles.create_user_if_not_exists('superadmin@emt.io',
-                                             '',
-                                             'EMT', 'Super Admin', '070000000', 'ROLE_SUPER_ADMIN');
-end;
+end
+
+$$ language plpgsql;
+
+select userroles.create_user_if_not_exists('superadmin@emt.io','','EMT', 'Super Admin', '070000000',
+    array['ROLE_SUPER_ADMIN'], array['DAY_1', 'DAY_2', 'DAY_3', 'DAY_4', 'DAY_5', 'DAY_6', 'DAY_7']);
 

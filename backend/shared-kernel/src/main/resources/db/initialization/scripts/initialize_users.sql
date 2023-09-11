@@ -1,34 +1,52 @@
-create or replace procedure userroles.create_person(in input_first_name varchar(80), in input_last_name varchar(80), in input_phone_number varchar(80), out person_id bigint)
-    modifies sql data
-begin
-    select id into person_id from new table (
-        insert into userroles.UR_PERSON(date_created, date_modified, first_name, last_name, phone_number)
-        values (current_timestamp, current_timestamp, input_first_name, input_last_name, input_phone_number)
-        );
-end;
+create or replace function userroles.create_person(_first_name text, _last_name text, _phone_number text) returns bigint as
+$$
+declare
+    _id bigint;
 
-create or replace type str_array as varchar(80) array[80];
-create or replace procedure userroles.create_user_if_not_exists(in input_email varchar(80), in input_password varchar(500), in input_first_name varchar(80),
-                                                                in input_last_name varchar(80), in input_phone_number varchar(80), in input_role varchar(250))
-    language sql
-    modifies sql data
 begin
-    declare user_id, person_id bigint;
 
-    if not exists(select id from userroles.ur_user where email = lower(input_email)) then
-        call userroles.create_person(input_first_name, input_last_name, input_phone_number, person_id);
+    insert into userroles.ur_person(date_created, date_modified, first_name, last_name, phone_number)
+    values(now(), now(), _first_name, _last_name, _phone_number)
+    returning id into _id;
+
+    return _id;
+
+end
+
+$$ language plpgsql;
+
+create or replace function userroles.create_user_if_not_exists(_email text, _password text, _first_name text, _last_name text, _phone_number text, _roles text[], _daily_check_ins text[]) returns void as
+$$
+declare
+    _user_id bigint;
+    _role text;
+    _person_id bigint;
+    _daily_check_in text;
+begin
+
+    if not exists(select id from userroles.ur_user where email = lower(_email)) then
+        _person_id = userroles.create_person(_first_name, _last_name, _phone_number);
+
         insert into userroles.ur_user(email, password, enabled, date_created, date_modified, ur_person_id)
-        values (input_email, input_password, true, current_timestamp, current_timestamp, person_id);
-        select id into user_id from userroles.UR_USER;
+        values (_email, _password, true, now(), now(), _person_id)
+        returning id into _user_id;
 
-        insert into userroles.UR_USER_ROLE(ur_user_id, ur_role_id)
-        values (user_id, userroles.FIND_ROLE_ID_BY_NAME(input_role));
+        foreach _role in array _roles loop
+                insert into userroles.ur_user_role(ur_user_id, ur_role_id)
+                values (_user_id, userroles.find_role_id_by_name(_role));
+            end loop;
+
+        foreach _daily_check_in in array _daily_check_ins loop
+                insert into daily_check_ins.mm_user_daily_check_in(ur_user_id, mm_daily_check_in_id)
+                values (_user_id, daily_check_ins.find_daily_check_in_id_by_label(_daily_check_in));
+            end loop;
+
     end if;
-end;
 
-begin
-    call userroles.create_user_if_not_exists('superadmin@emt.io',
-                                             '',
-                                             'EMT', 'Super Admin', '070000000', 'ROLE_SUPER_ADMIN');
-end;
+end
+
+$$ language plpgsql;
+
+select userroles.create_user_if_not_exists('superadmin@emt.io','','EMT', 'Super Admin', '070000000',
+    array['ROLE_SUPER_ADMIN'], array['DAY_1', 'DAY_2', 'DAY_3', 'DAY_4', 'DAY_5', 'DAY_6', 'DAY_7']);
 

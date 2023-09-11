@@ -87,12 +87,12 @@ public class OrderedProductService {
             orderedProductRepository.save(orderedProduct);
 
             totalPrice -= orderedProduct.getPrice();
-            user.setCreditToSpend(totalPrice);
+            user.setCreditDebt(totalPrice);
             userService.save(user);
         } else if(orderedProductQuantity == 1){
             totalPrice -= orderedProduct.getPrice();
             orderedProductRepository.deleteById(orderedProductId);
-            user.setCreditToSpend(totalPrice);
+            user.setCreditDebt(totalPrice);
             userService.save(user);
         }
     }

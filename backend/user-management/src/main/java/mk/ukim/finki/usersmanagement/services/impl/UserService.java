@@ -24,10 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -90,7 +88,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
         user.setCreditBalance(0.0);
-        user.setCreditToSpend(0.0);
+        user.setCreditDebt(0.0);
         user.setDateCreated(OffsetDateTime.now());
         userRepository.save(user);
 

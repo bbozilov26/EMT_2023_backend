@@ -14,7 +14,7 @@ public class UserDTO {
     private final OffsetDateTime dateModified;
     private final Boolean enabled;
     private final Double creditBalance;
-    private final Double creditToSpend;
+    private final Double creditDebt;
     private final PersonDTO personDTO;
     private final List<RoleDTO> roleDTO;
 }

@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "mm_users_daily_check_ins", schema = "mm_daily_check_ins")
+@Table(name = "mm_user_daily_check_in", schema = "daily_check_ins")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +23,7 @@ public class UserDailyCheckIn extends AbstractEntity<UserDailyCheckInId> {
     private OffsetDateTime dateModified;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mm_daily_check_ins_id")
+    @JoinColumn(name = "mm_daily_check_in_id")
     private DailyCheckIn dailyCheckIn;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-//import mk.ukim.finki.emt.productscatalog.domain.models.RatingsAndReviews;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.sharedkernel.utils.NullableUtils;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "ur_users", schema = "userroles")
+@Table(name = "ur_user", schema = "userroles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +28,7 @@ public class User extends AbstractEntity<UserId> {
     private OffsetDateTime dateModified;
     private Boolean enabled;
     private Double creditBalance;
-    private Double creditToSpend;
+    private Double creditDebt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_person_id")
@@ -46,14 +45,6 @@ public class User extends AbstractEntity<UserId> {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<UserDailyCheckIn> userDailyCheckIns;
-
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private List<UserOrder> userOrders;
-//
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private List<UserOrderedProduct> userOrderedProducts;
 
     @JsonIgnore
     public List<Role> getRoles() {
