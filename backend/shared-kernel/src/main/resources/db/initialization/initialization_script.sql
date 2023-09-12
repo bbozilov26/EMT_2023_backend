@@ -152,7 +152,16 @@ end
 
 $$ language plpgsql;
 
-create or replace function userroles.create_user_if_not_exists(_email text, _password text, _first_name text, _last_name text, _phone_number text, _roles text[], _daily_check_ins text[]) returns void as
+create or replace function userroles.create_user_if_not_exists(
+    _email text,
+    _password text,
+    _first_name text,
+    _last_name text,
+    _phone_number text,
+    _roles text[],
+    _daily_check_ins text[],
+    _credit_balance double precision,
+    _credit_debt double precision) returns void as
 $$
 declare
     _user_id bigint;
@@ -164,8 +173,8 @@ begin
     if not exists(select id from userroles.ur_user where email = lower(_email)) then
         _person_id = userroles.create_person(_first_name, _last_name, _phone_number);
 
-        insert into userroles.ur_user(email, password, enabled, date_created, date_modified, ur_person_id)
-        values (_email, _password, true, now(), now(), _person_id)
+        insert into userroles.ur_user(email, password, enabled, date_created, date_modified, ur_person_id, credit_balance, credit_debt)
+        values (_email, _password, true, now(), now(), _person_id, _credit_balance, _credit_debt)
         returning id into _user_id;
 
         foreach _role in array _roles loop
@@ -185,5 +194,9 @@ end
 $$ language plpgsql;
 
 select userroles.create_user_if_not_exists('superadmin@emt.io','','EMT', 'Super Admin', '070000000',
-    array['ROLE_SUPER_ADMIN'], array['DAY_1', 'DAY_2', 'DAY_3', 'DAY_4', 'DAY_5', 'DAY_6', 'DAY_7']);
+    array['ROLE_SUPER_ADMIN'], array['DAY_1', 'DAY_2', 'DAY_3', 'DAY_4', 'DAY_5', 'DAY_6', 'DAY_7'], 0.0, 0.0);
+select userroles.create_user_if_not_exists('admin@emt.io','','EMT', 'Admin', '071000000',
+                                           array['ROLE_ADMIN'], array['DAY_1', 'DAY_2', 'DAY_3', 'DAY_4', 'DAY_5', 'DAY_6', 'DAY_7'], 0.0, 0.0);
+select userroles.create_user_if_not_exists('customer@emt.io','','EMT', 'Customer', '072000000',
+                                           array['ROLE_CUSTOMER'], array['DAY_1', 'DAY_2', 'DAY_3', 'DAY_4', 'DAY_5', 'DAY_6', 'DAY_7'], 0.0, 0.0);
 

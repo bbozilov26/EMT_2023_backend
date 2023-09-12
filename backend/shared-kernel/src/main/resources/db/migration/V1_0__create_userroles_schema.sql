@@ -38,7 +38,6 @@ CREATE TABLE userroles.ur_user
     ur_person_id                BIGINT,
     credit_balance              DOUBLE PRECISION,
     credit_debt                 DOUBLE PRECISION,
-    ur_user_daily_check_in_id   BIGINT,
     PRIMARY KEY (id),
     UNIQUE (email)
 );
