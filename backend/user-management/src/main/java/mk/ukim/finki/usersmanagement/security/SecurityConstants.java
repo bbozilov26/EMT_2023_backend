@@ -4,7 +4,7 @@ public class SecurityConstants {
 
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
-    public static final String SECRET = "s3cr3tt0k3n";
+    public static final String SECRET = "3mts3cr3tt0k3n";
     public static final long EXPIRATION_TIME = 864_000_000; // 10 days
     public static final String LOGIN_URL = "/login";
     public static final String LOGOUT = "/logout";
@@ -14,6 +14,7 @@ public class SecurityConstants {
     public final static String CLAIM_AUTHORITY = "authority";
     public static final String CLAIM_USER_ID = "userId";
     public final static String CLAIM_PRIVILEGES = "privileges";
-    public final static String PRODUCTS = "products";
+    public final static String PRODUCTS = "/products";
+    public final static String ORDERS = "/orders";
 
 }

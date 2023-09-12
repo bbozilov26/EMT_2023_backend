@@ -59,7 +59,8 @@ public class WebSecurityConfig {
                         REGISTER,
                         PUBLIC_URLS,
                         SWAGGER_UI,
-                        PRODUCTS
+                        PRODUCTS,
+                        ORDERS
                 ).permitAll()
                 .anyRequest()
                 .authenticated();
