@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/daily_check_ins")
+@RequestMapping("/daily-check-ins")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class DailyCheckInController {

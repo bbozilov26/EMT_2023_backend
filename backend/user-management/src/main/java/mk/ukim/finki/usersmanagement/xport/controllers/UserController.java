@@ -1,6 +1,7 @@
 package mk.ukim.finki.usersmanagement.xport.controllers;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.DailyCheckInId;
 import mk.ukim.finki.usersmanagement.domain.converters.UserConverter;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
@@ -56,6 +57,11 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable UserId id){
         userService.delete(id);
+    }
+
+    @PutMapping("/claim-daily-check-in")
+    public void claimDailyCheckIn(@RequestBody UserDailyCheckInDTO userDailyCheckInDTO){
+        userService.claimDailyCheckIn(userDailyCheckInDTO);
     }
 
     @Scheduled(cron = "0 0 0 * * *")
