@@ -9,8 +9,6 @@ import java.time.OffsetDateTime;
 @Data
 public class UserDailyCheckInDTO {
     private final Boolean claimed;
-    private final OffsetDateTime dateCreated;
-    private final OffsetDateTime dateModified;
     private final UserId userId;
     private final DailyCheckInId dailyCheckInId;
 }
