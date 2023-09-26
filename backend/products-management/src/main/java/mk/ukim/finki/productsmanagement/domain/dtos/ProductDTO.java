@@ -14,7 +14,7 @@ public class ProductDTO {
     private final OffsetDateTime dateModified;
     private final Integer quantity;
     private final Double price;
-    private final File image;
+    private final byte[] image;
     private final String title;
     private final String description;
     private final Category category;

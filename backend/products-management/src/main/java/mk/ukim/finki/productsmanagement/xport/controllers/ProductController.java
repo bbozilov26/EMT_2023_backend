@@ -38,7 +38,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDTO findById(@PathVariable ProductId id){
-        return productConverter.toProductDTO(productService.findById(id).get());
+        return productConverter.toProductDTO(productService.findById(id).orElseThrow(IllegalArgumentException::new));
     }
 
     @PostMapping("/create")

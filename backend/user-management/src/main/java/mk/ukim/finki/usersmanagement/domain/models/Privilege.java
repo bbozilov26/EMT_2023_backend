@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ur_privilege", schema = "userroles")
+@Table(name = "ur_privilege")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

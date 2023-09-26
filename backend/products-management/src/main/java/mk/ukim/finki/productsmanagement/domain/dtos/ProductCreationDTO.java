@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 public class ProductCreationDTO {
     private Integer quantity;
     private Double price;
-    private File image;
+    private String image;
     private String title;
     private String description;
     private Category category;

@@ -11,7 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +36,10 @@ public class ProductService {
     }
 
     public Optional<Product> findById(ProductId id){
-        return productRepository.findById(id);
+        Product product = productRepository.findById(id).isPresent() ?
+                productRepository.findById(id).get() : null;
+
+        return Optional.ofNullable(product);
     }
 
     public Product create(ProductCreationDTO productCreationDTO){
@@ -49,10 +57,14 @@ public class ProductService {
         product.setDateModified(OffsetDateTime.now());
         product.setQuantity(productCreationDTO.getQuantity());
         product.setPrice(productCreationDTO.getPrice());
-        product.setImage(productCreationDTO.getImage());
         product.setTitle(productCreationDTO.getTitle());
         product.setDescription(productCreationDTO.getDescription());
         product.setCategory(productCreationDTO.getCategory());
+
+        if(productCreationDTO.getImage() != null) {
+            byte[] imageBytes = Base64.getDecoder().decode(productCreationDTO.getImage().split(",")[1]);
+            product.setImage(imageBytes);
+        }
 
         return productRepository.save(product);
     }

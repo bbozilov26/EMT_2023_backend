@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "mm_ordered_product", schema = "orders")
+@Table(name = "mm_ordered_product")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +28,7 @@ public class OrderedProduct extends AbstractEntity<OrderedProductId> {
     private Double totalPrice;
     private String title;
     private String description;
-    private File image;
+    private byte[] image;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mm_product_id")

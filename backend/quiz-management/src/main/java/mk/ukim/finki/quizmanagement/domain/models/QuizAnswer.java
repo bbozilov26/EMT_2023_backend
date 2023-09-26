@@ -9,7 +9,7 @@ import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "mm_quiz_answer", schema = "quiz")
+@Table(name = "mm_quiz_answer")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

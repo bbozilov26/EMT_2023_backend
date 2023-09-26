@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "mm_user_daily_check_in", schema = "daily_check_ins")
+@Table(name = "mm_user_daily_check_in")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
