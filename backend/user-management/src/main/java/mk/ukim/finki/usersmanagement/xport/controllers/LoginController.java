@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/sign-in")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping("/login")
+    @PostMapping
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         loginService.login(request, response);
     }

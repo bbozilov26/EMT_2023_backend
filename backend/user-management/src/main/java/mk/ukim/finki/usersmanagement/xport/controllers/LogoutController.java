@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/logout")
+@RequestMapping("/sign-out")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class LogoutController {
