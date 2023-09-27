@@ -46,7 +46,7 @@ public class ProductController {
         return productConverter.toProductDTO(productService.create(productCreationDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PostMapping("/update/{id}")
     public ProductDTO edit(@PathVariable ProductId id, @RequestBody ProductCreationDTO productCreationDTO){
         return productConverter.toProductDTO(productService.edit(id, productCreationDTO));
     }
