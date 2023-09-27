@@ -1,5 +1,6 @@
 #!/bin/bash
 cat \
+"scripts/create_uuid_extension.sql" \
 "scripts/initialize_daily_check_ins.sql" \
 "scripts/initialize_privileges.sql" \
 "scripts/initialize_roles.sql" \

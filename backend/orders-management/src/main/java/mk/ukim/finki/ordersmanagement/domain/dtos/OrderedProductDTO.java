@@ -17,6 +17,6 @@ public class OrderedProductDTO {
     private final Double totalPrice;
     private final String title;
     private final String description;
-    private final File image;
+    private final byte[] image;
     private final ProductDTO productDTO;
 }

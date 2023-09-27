@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 public class DomainObjectId implements Serializable {
 
+
     private String id;
 
     @JsonCreator
