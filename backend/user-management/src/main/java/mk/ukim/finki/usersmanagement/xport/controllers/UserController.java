@@ -49,7 +49,7 @@ public class UserController {
         return userConverter.toUserDTO(userService.create(userCreationDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/update/{id}")
     public UserDTO edit(@PathVariable UserId id, @RequestBody UserCreationDTO userCreationDTO){
         return userConverter.toUserDTO(userService.edit(id, userCreationDTO));
     }

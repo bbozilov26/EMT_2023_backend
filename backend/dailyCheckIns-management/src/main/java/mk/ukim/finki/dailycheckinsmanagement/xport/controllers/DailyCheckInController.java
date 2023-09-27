@@ -36,7 +36,7 @@ public class DailyCheckInController {
         return dailyCheckInConverter.toDTO(dailyCheckInsService.create(dailyCheckInDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/update/{id}")
     public DailyCheckInDTO edit(@PathVariable DailyCheckInId id, @RequestBody DailyCheckInCreationDTO dailyCheckInDTO){
         return dailyCheckInConverter.toDTO(dailyCheckInsService.edit(id, dailyCheckInDTO));
     }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/quiz_questions")
+@RequestMapping("/quiz-questions")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class QuizQuestionController {
@@ -36,7 +36,7 @@ public class QuizQuestionController {
         return quizQuestionConverter.toDTO(quizQuestionService.create(quizQuestionDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/update/{id}")
     public QuizQuestionDTO edit(@PathVariable QuizQuestionId id, @RequestBody QuizQuestionCreationDTO quizQuestionDTO){
         return quizQuestionConverter.toDTO(quizQuestionService.edit(id, quizQuestionDTO));
     }

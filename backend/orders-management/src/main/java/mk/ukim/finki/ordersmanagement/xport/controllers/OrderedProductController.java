@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ordered_products")
+@RequestMapping("/ordered-products")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class OrderedProductController {
@@ -30,12 +30,12 @@ public class OrderedProductController {
         return orderedProductConverter.toDTO(orderedProductService.findByIdAndUserId(orderedProductId, userId));
     }
 
-    @PostMapping("/add/{productId}/{userId}")
+    @GetMapping("/add/{productId}/{userId}")
     public OrderedProductDTO addProductToShoppingCart(@PathVariable ProductId productId, @PathVariable UserId userId){
         return orderedProductConverter.toDTO(orderedProductService.addProductToShoppingCart(productId, userId));
     }
 
-    @PostMapping("/remove/{orderedProductId}/{userId}")
+    @DeleteMapping("/remove/{orderedProductId}/{userId}")
     public void removeProductToShoppingCart(@PathVariable OrderedProductId orderedProductId, @PathVariable UserId userId){
         orderedProductService.removeProductFromShoppingCart(orderedProductId, userId);
     }

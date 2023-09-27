@@ -34,7 +34,7 @@ public class OrderController {
         return orderConverter.toOrderDTO(orderService.create(orderCreationDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/update/{id}")
     public OrderDTO edit(@PathVariable OrderId id, @RequestBody OrderCreationDTO orderCreationDTO){
         return orderConverter.toOrderDTO(orderService.edit(id, orderCreationDTO));
     }
