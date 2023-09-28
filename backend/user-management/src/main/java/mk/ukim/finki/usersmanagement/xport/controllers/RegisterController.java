@@ -7,7 +7,7 @@ import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/register")
+@RequestMapping("/sign-up")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class RegisterController {
