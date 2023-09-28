@@ -19,7 +19,7 @@ public class UserDailyCheckInsConverter {
         return new UserDailyCheckInDTO(
                 userDailyCheckIn.getClaimed(),
                 userDailyCheckIn.getUser().getId(),
-                dailyCheckInConverter.toDTO(userDailyCheckIn.getDailyCheckIn())
+                userDailyCheckIn.getDailyCheckIn().getId()
         );
     }
 

@@ -11,5 +11,5 @@ import java.time.OffsetDateTime;
 public class UserDailyCheckInDTO {
     private final Boolean claimed;
     private final UserId userId;
-    private final DailyCheckInDTO dailyCheckIn;
+    private final DailyCheckInId dailyCheckInId;
 }
