@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class UserConverter {
     private final PersonConverter personConverter;
     private final RoleConverter roleConverter;
+    private final UserDailyCheckInsConverter userDailyCheckInsConverter;
 
     public UserDTO toUserDTO(User user){
         return new UserDTO(
@@ -24,7 +25,8 @@ public class UserConverter {
                 user.getCreditBalance(),
                 user.getCreditDebt(),
                 personConverter.toPersonDTO(user.getPerson()),
-                roleConverter.toRoleDTOList(user.getUserRoles())
+                roleConverter.toRoleDTOList(user.getUserRoles()),
+                userDailyCheckInsConverter.toDTOList(user.getUserDailyCheckIns())
         );
     }
 

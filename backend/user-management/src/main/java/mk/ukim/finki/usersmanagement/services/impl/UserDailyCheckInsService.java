@@ -6,6 +6,7 @@ import mk.ukim.finki.dailycheckinsmanagement.services.impl.DailyCheckInsService;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.DailyCheckIn;
 import mk.ukim.finki.usersmanagement.domain.models.UserDailyCheckIn;
+import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import mk.ukim.finki.usersmanagement.domain.repositories.UserDailyCheckInsRepository;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 import org.springframework.stereotype.Service;
@@ -57,7 +58,7 @@ public class UserDailyCheckInsService {
         return userDailyCheckInsRepository.save(userDailyCheckIn);
     }
 
-    public List<UserDailyCheckIn> resetDailyCheckInWeekly(User user){
+    public void resetDailyCheckInWeekly(User user){
         List<UserDailyCheckIn> userDailyCheckIns = userDailyCheckInsRepository.findAllByUserId(user.getId());
         UserDailyCheckIn firstDailyCheckIn = userDailyCheckIns.stream()
                 .filter(userDailyCheckIn ->
@@ -68,10 +69,10 @@ public class UserDailyCheckInsService {
 
         if(ChronoUnit.DAYS.between(firstDailyCheckIn.getDateModified().toLocalDate(), OffsetDateTime.now().toLocalDate()) == 7){
             userDailyCheckInsRepository.deleteAllById(userDailyCheckIns.stream().map(UserDailyCheckIn::getId).collect(Collectors.toList()));
-            return bindWithUser(user);
+            bindWithUser(user);
         }
 
-        return userDailyCheckIns;
+//        return userDailyCheckIns;
     }
 
     public List<UserDailyCheckIn> findAllClaimedByUser(User user){
@@ -80,5 +81,9 @@ public class UserDailyCheckInsService {
 
     public List<UserDailyCheckIn> findAllByClaimedIsTrueOrderByIdAndUserAsc(){
         return userDailyCheckInsRepository.findAllByClaimedIsTrueOrderByIdAndUserAsc();
+    }
+
+    public List<UserDailyCheckIn> findAllByUser(UserId userId){
+        return userDailyCheckInsRepository.findAllByUserId(userId);
     }
 }

@@ -3,11 +3,13 @@ package mk.ukim.finki.usersmanagement.xport.controllers;
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.DailyCheckInId;
 import mk.ukim.finki.usersmanagement.domain.converters.UserConverter;
+import mk.ukim.finki.usersmanagement.domain.converters.UserDailyCheckInsConverter;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
+import mk.ukim.finki.usersmanagement.services.impl.UserDailyCheckInsService;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,8 @@ public class UserController {
 
     private final UserService userService;
     private final UserConverter userConverter;
+    private final UserDailyCheckInsService userDailyCheckInsService;
+    private final UserDailyCheckInsConverter userDailyCheckInsConverter;
 
     @GetMapping("/all")
     public List<UserDTO> getAll(){
@@ -70,4 +74,8 @@ public class UserController {
         userService.resetDailyCheckIns();
     }
 
+    @GetMapping("/all-daily-check-ins/{userId}")
+    public List<UserDailyCheckInDTO> getAllDailyCheckInsByUser(@PathVariable UserId userId){
+        return userDailyCheckInsConverter.toDTOList(userDailyCheckInsService.findAllByUser(userId));
+    }
 }
