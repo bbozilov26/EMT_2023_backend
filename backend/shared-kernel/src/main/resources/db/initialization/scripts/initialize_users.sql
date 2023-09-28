@@ -46,8 +46,8 @@ begin
             end loop;
 
         foreach _daily_check_in in array _daily_check_ins loop
-                insert into mm_user_daily_check_in(id, ur_user_id, mm_daily_check_in_id)
-                values (uuid_generate_v4(), _user_id, find_daily_check_in_id_by_label(_daily_check_in));
+                insert into mm_user_daily_check_in(id, claimed, date_created, date_modified, ur_user_id, mm_daily_check_in_id)
+                values (uuid_generate_v4(), _user_id, false, now(), now(), find_daily_check_in_id_by_label(_daily_check_in));
             end loop;
 
     end if;
