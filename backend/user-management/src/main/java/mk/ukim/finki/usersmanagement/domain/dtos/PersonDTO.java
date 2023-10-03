@@ -8,8 +8,6 @@ import java.time.OffsetDateTime;
 @Data
 public class PersonDTO {
     private final PersonId id;
-    private final OffsetDateTime dateCreated;
-    private final OffsetDateTime dateModified;
     private final String firstName;
     private final String lastName;
     private final String phoneNumber;

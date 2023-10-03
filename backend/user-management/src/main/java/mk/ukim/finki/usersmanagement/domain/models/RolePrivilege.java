@@ -19,7 +19,7 @@ public class RolePrivilege extends AbstractEntity<PrivilegeId> {
     @JoinColumn(name = "ur_role_id")
     private Role role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ur_privilege_id")
     private Privilege privilege;
 }

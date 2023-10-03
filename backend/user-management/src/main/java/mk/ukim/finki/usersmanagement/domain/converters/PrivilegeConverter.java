@@ -23,6 +23,8 @@ public class PrivilegeConverter {
     }
 
     public List<PrivilegeDTO> toPrivilegeDTOList(List<RolePrivilege> rolePrivilegeList){
-        return rolePrivilegeList.stream().map(t-> toPrivilegeDTO(t.getPrivilege())).collect(Collectors.toList());
+        return rolePrivilegeList.stream()
+                .map(rp -> toPrivilegeDTO(rp.getPrivilege()))
+                .collect(Collectors.toList());
     }
 }

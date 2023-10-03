@@ -2,5 +2,5 @@ package mk.ukim.finki.usersmanagement.domain.models.ids;
 
 import mk.ukim.finki.sharedkernel.domain.base.DomainObjectId;
 
-public class UserRoleId extends DomainObjectId {
+public class LoginSessionId extends DomainObjectId {
 }

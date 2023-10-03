@@ -16,6 +16,6 @@ public class UserDTO {
     private final Double creditBalance;
     private final Double creditDebt;
     private final PersonDTO personDTO;
-    private final List<RoleDTO> roleDTO;
-    private final List<UserDailyCheckInDTO> userDailyCheckIns;
+    private final RoleDTO roleDTO;
+//    private final List<UserDailyCheckInDTO> userDailyCheckIns;
 }

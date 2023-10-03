@@ -48,4 +48,9 @@ public class RoleService {
 
         return roleRepository.save(role);
     }
+
+    public Role findByLabel(String label){
+        return roleRepository.findByLabel(label).isPresent() ?
+                roleRepository.findByLabel(label).get() : null;
+    }
 }

@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @Table(name = "ur_user")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class User extends AbstractEntity<UserId> {
 
     private String email;
@@ -30,13 +29,13 @@ public class User extends AbstractEntity<UserId> {
     private Double creditBalance;
     private Double creditDebt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ur_person_id")
     private Person person;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<UserRole> userRoles;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ur_role_id")
+    private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -46,22 +45,27 @@ public class User extends AbstractEntity<UserId> {
     @JsonIgnore
     private List<UserDailyCheckIn> userDailyCheckIns;
 
+    public User() {
+        super(UserId.randomId(UserId.class));
+    }
+
     @JsonIgnore
-    public List<Role> getRoles() {
-        if (userRoles == null) {
-            return new ArrayList<>();
+    public Role getRole() {
+        if (role == null) {
+            return new Role();
         }
 
-        return userRoles.stream().map(UserRole::getRole).collect(Collectors.toList());
+        return role;
     }
 
     @JsonIgnore
     public List<Privilege> getPrivileges() {
-        return userRoles.stream().
-                map(UserRole::getRole).
-                flatMap(r -> r.getRolePrivileges().stream()).
-                map(RolePrivilege::getPrivilege).
-                distinct().collect(Collectors.toList());
+        return role
+                .getRolePrivileges()
+                .stream()
+                .map(RolePrivilege::getPrivilege)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     @JsonIgnore

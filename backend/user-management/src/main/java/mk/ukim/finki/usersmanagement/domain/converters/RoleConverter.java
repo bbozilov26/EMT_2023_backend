@@ -3,7 +3,6 @@ package mk.ukim.finki.usersmanagement.domain.converters;
 import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.usersmanagement.domain.dtos.RoleDTO;
 import mk.ukim.finki.usersmanagement.domain.models.Role;
-import mk.ukim.finki.usersmanagement.domain.models.UserRole;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,9 +21,5 @@ public class RoleConverter {
                 role.getLabel(),
                 privilegeConverter.toPrivilegeDTOList(role.getRolePrivileges())
         );
-    }
-
-    public List<RoleDTO> toRoleDTOList(List<UserRole> userRoleList){
-        return userRoleList.stream().map(u->toRoleDTO(u.getRole())).collect(Collectors.toList());
     }
 }

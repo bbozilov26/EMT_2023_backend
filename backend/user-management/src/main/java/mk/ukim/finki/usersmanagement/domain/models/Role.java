@@ -23,7 +23,7 @@ public class Role extends AbstractEntity<RoleId> {
     private String role;
     private String label;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<RolePrivilege> rolePrivileges;
 }

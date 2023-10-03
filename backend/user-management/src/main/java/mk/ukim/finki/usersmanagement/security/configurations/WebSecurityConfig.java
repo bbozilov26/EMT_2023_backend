@@ -1,76 +1,67 @@
 package mk.ukim.finki.usersmanagement.security.configurations;
 
-import lombok.AllArgsConstructor;
-import mk.ukim.finki.usersmanagement.security.CustomUsernamePasswordAuthenticationProvider;
+import mk.ukim.finki.usersmanagement.security.JWTUtils;
 import mk.ukim.finki.usersmanagement.security.filters.JWTAuthenticationFilter;
 import mk.ukim.finki.usersmanagement.security.filters.JWTAuthorizationFilter;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-
 import static mk.ukim.finki.usersmanagement.security.SecurityConstants.*;
 
-@Order(200)
-@Profile("jwt")
-@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@AllArgsConstructor
-public class WebSecurityConfig {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
-    private final AuthenticationConfiguration authConfiguration;
+    private final JWTUtils jwtUtils;
+    private final UserDetailsService userDetailsService;
 
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authConfiguration.getAuthenticationManager();
+    public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService, JWTUtils jwtUtils, UserDetailsService userDetailsService) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userService = userService;
+        this.jwtUtils = jwtUtils;
+        this.userDetailsService = userDetailsService;
     }
 
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors()
+                .and()
+                .csrf()
+                .disable()
                 .authorizeRequests()
                 .antMatchers(
                         LOGIN_URL,
                         LOGOUT,
                         REGISTER,
-                        PUBLIC_URLS,
-                        SWAGGER_UI,
                         PRODUCTS,
-                        ORDERS
-                ).permitAll()
+                        ORDERS,
+                        "/**"
+                )
+                .permitAll()
                 .anyRequest()
-                .authenticated();
-
-        http
-                .addFilter(authorizationFilter())
-                .addFilter(authenticationFilter())
+                .authenticated()
+                .and()
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), userService))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), userService, jwtUtils, bCryptPasswordEncoder))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
 
-        return http.build();
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean
@@ -93,16 +84,6 @@ public class WebSecurityConfig {
         config.addAllowedMethod("PATCH");
         source.registerCorsConfiguration("/**", config);
         return source;
-    }
-
-    @Bean
-    public JWTAuthorizationFilter authorizationFilter() throws Exception {
-        return new JWTAuthorizationFilter(authenticationManager());
-    }
-
-    @Bean
-    public JWTAuthenticationFilter authenticationFilter() throws Exception {
-        return new JWTAuthenticationFilter(authenticationManager(), userService, passwordEncoder);
     }
 }
 

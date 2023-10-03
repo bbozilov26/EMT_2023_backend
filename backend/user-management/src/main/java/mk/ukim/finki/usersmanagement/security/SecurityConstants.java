@@ -6,7 +6,7 @@ public class SecurityConstants {
     public static final String HEADER_STRING = "Authorization";
     public static final String SECRET = "3mts3cr3tt0k3n";
     public static final long EXPIRATION_TIME = 864_000_000; // 10 days
-    public static final String LOGIN_URL = "/sign-in";
+    public static final String LOGIN_URL = "/login";
     public static final String LOGOUT = "/sign-out";
     public static final String REGISTER = "/sign-up";
     public static final String PUBLIC_URLS="/public/**";

@@ -11,5 +11,5 @@ public class UserCreationDTO {
     private String password;
     private String repeatPassword;
     private PersonCreationDTO personDTO;
-    private List<RoleId> roleIds;
+//    private RoleId roleId;
 }

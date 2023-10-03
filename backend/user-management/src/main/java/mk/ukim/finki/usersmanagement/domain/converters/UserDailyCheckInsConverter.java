@@ -17,9 +17,11 @@ public class UserDailyCheckInsConverter {
 
     public UserDailyCheckInDTO toDTO(UserDailyCheckIn userDailyCheckIn){
         return new UserDailyCheckInDTO(
+                userDailyCheckIn.getId(),
                 userDailyCheckIn.getClaimed(),
                 userDailyCheckIn.getUser().getId(),
-                userDailyCheckIn.getDailyCheckIn().getId()
+//                userDailyCheckIn.getDailyCheckIn().getId()
+                dailyCheckInConverter.toDTO(userDailyCheckIn.getDailyCheckIn())
         );
     }
 

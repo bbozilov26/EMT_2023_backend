@@ -3,6 +3,7 @@ package mk.ukim.finki.usersmanagement.services.impl;
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.constants.DailyCheckInConstants;
 import mk.ukim.finki.dailycheckinsmanagement.services.impl.DailyCheckInsService;
+import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInClaimDTO;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.DailyCheckIn;
 import mk.ukim.finki.usersmanagement.domain.models.UserDailyCheckIn;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,15 +31,17 @@ public class UserDailyCheckInsService {
     public List<UserDailyCheckIn> bindWithUser(User user){
         List<DailyCheckIn> dailyCheckIns = dailyCheckInsService.findAll();
         List<UserDailyCheckIn> userDailyCheckIns = user.getUserDailyCheckIns();
-        if(userDailyCheckIns.isEmpty()) {
+
+        if(userDailyCheckIns == null) {
+            List<UserDailyCheckIn> newUserDailyCheckIns = new ArrayList<>();
             dailyCheckIns.forEach(dailyCheckIn ->
-                    userDailyCheckIns.add(this.create(new UserDailyCheckIn(), user, dailyCheckIn))
+                    newUserDailyCheckIns.add(this.create(new UserDailyCheckIn(), user, dailyCheckIn))
             );
 
-            return userDailyCheckIns;
-        } else {
-            return user.getUserDailyCheckIns();
+            return newUserDailyCheckIns;
         }
+
+        return userDailyCheckIns;
     }
 
     public UserDailyCheckIn create(UserDailyCheckIn userDailyCheckIn, User user, DailyCheckIn dailyCheckIn){
@@ -50,8 +54,8 @@ public class UserDailyCheckInsService {
         return userDailyCheckInsRepository.save(userDailyCheckIn);
     }
 
-    public UserDailyCheckIn claimDailyCheckIn(UserDailyCheckInDTO userDailyCheckInDTO){
-        UserDailyCheckIn userDailyCheckIn = userDailyCheckInsRepository.findByUserIdAndDailyCheckInId(userDailyCheckInDTO.getUserId(), userDailyCheckInDTO.getDailyCheckInId());
+    public UserDailyCheckIn claimDailyCheckIn(UserDailyCheckInClaimDTO userDailyCheckInClaimDTO){
+        UserDailyCheckIn userDailyCheckIn = userDailyCheckInsRepository.findById(userDailyCheckInClaimDTO.getUserDailyCheckInId()).get();
         userDailyCheckIn.setClaimed(true);
         userDailyCheckIn.setDateModified(OffsetDateTime.now());
 

@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import mk.ukim.finki.dailycheckinsmanagement.domain.models.ids.DailyCheckInId;
 import mk.ukim.finki.usersmanagement.domain.converters.UserConverter;
 import mk.ukim.finki.usersmanagement.domain.converters.UserDailyCheckInsConverter;
-import mk.ukim.finki.usersmanagement.domain.dtos.UserCreationDTO;
-import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
-import mk.ukim.finki.usersmanagement.domain.dtos.UserDailyCheckInDTO;
-import mk.ukim.finki.usersmanagement.domain.dtos.UserFilter;
+import mk.ukim.finki.usersmanagement.domain.dtos.*;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import mk.ukim.finki.usersmanagement.services.impl.UserDailyCheckInsService;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
@@ -63,9 +60,9 @@ public class UserController {
         userService.delete(id);
     }
 
-    @PutMapping("/claim-daily-check-in")
-    public void claimDailyCheckIn(@RequestBody UserDailyCheckInDTO userDailyCheckInDTO){
-        userService.claimDailyCheckIn(userDailyCheckInDTO);
+    @PostMapping("/claim-daily-check-in")
+    public UserDTO claimDailyCheckIn(@RequestBody UserDailyCheckInClaimDTO userDailyCheckInClaimDTO){
+        return userConverter.toUserDTO(userService.claimDailyCheckIn(userDailyCheckInClaimDTO));
     }
 
     @Scheduled(cron = "0 0 0 * * *")
@@ -77,5 +74,10 @@ public class UserController {
     @GetMapping("/all-daily-check-ins/{userId}")
     public List<UserDailyCheckInDTO> getAllDailyCheckInsByUser(@PathVariable UserId userId){
         return userDailyCheckInsConverter.toDTOList(userDailyCheckInsService.findAllByUser(userId));
+    }
+
+    @PostMapping("/filtered")
+    public List<UserDTO> getFilteredUsers(@RequestBody UserFilter filter){
+        return userConverter.toUserDTOList(userService.filterUsers(filter));
     }
 }
