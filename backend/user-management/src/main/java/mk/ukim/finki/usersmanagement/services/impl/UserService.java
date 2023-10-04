@@ -101,6 +101,7 @@ public class UserService {
         user.setEnabled(true);
         user.setCreditBalance(0.0);
         user.setCreditDebt(0.0);
+        user.setStreak(0);
         user.setDateCreated(OffsetDateTime.now());
         userRepository.save(user);
 
@@ -112,7 +113,6 @@ public class UserService {
     }
 
     private User fillProperties(User user, UserCreationDTO userDTO){
-        user.setDateModified(OffsetDateTime.now());
         user.setPerson(user.getPerson() == null ?
                 personService.createOrUpdate(null, userDTO.getPersonDTO())
                 : personService.createOrUpdate(user.getPerson(), userDTO.getPersonDTO())
@@ -121,6 +121,7 @@ public class UserService {
 
         user.setRole(roleService.findByLabel("ROLE_CUSTOMER"));
         user.setUserDailyCheckIns(userDailyCheckInsService.bindWithUser(user));
+        user.setDateModified(OffsetDateTime.now());
 
         return userRepository.save(user);
     }
@@ -153,6 +154,7 @@ public class UserService {
         else {
             UserDailyCheckIn userDailyCheckIn = userDailyCheckInsService.claimDailyCheckIn(userDailyCheckInClaimDTO);
             user.setCreditBalance(user.getCreditBalance() + userDailyCheckIn.getDailyCheckIn().getDailyReward());
+            user.setStreak(user.getStreak() + 1);
             user.setDateModified(OffsetDateTime.now());
 
             return userRepository.save(user);
