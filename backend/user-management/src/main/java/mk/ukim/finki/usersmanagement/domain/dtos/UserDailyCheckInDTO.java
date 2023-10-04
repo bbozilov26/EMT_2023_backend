@@ -12,6 +12,7 @@ import java.time.OffsetDateTime;
 public class UserDailyCheckInDTO {
     private final UserDailyCheckInId id;
     private final Boolean claimed;
+    private final OffsetDateTime dateModified;
     private final UserId userId;
     private final DailyCheckInDTO dailyCheckInDTO;
 }

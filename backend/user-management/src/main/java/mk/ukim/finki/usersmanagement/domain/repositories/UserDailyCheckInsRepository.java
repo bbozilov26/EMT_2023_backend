@@ -19,7 +19,7 @@ public interface UserDailyCheckInsRepository extends JpaRepository<UserDailyChec
 
     List<UserDailyCheckIn> findAllByUserAndClaimedIsTrue(User user);
 
-    @Query("select ud from UserDailyCheckIn ud where ud.user.id = :userId")
+    @Query("select ud from UserDailyCheckIn ud where ud.user.id = :userId order by ud.dailyCheckIn.label asc")
     List<UserDailyCheckIn> findAllByUserId(UserId userId);
 
     @Query("select ud from UserDailyCheckIn ud where ud.claimed = true order by ud.id asc, ud.user.id asc")
