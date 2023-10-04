@@ -26,6 +26,7 @@ public class Person extends AbstractEntity<PersonId> {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String address;
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
     @JsonIgnore

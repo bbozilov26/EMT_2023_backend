@@ -10,5 +10,6 @@ public class PersonDTO {
     private final PersonId id;
     private final String firstName;
     private final String lastName;
+    private final String address;
     private final String phoneNumber;
 }

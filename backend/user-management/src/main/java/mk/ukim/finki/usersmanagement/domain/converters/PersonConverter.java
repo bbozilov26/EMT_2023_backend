@@ -16,6 +16,7 @@ public class PersonConverter {
                 person.getId(),
                 person.getFirstName(),
                 person.getLastName(),
+                person.getAddress(),
                 person.getPhoneNumber()
         );
     }

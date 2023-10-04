@@ -47,7 +47,7 @@ public class PersonService {
         person.setFirstName(personDTO.getFirstName());
         person.setLastName(personDTO.getLastName());
         person.setPhoneNumber(personDTO.getPhoneNumber());
-
+        person.setAddress(personDTO.getAddress());
         return personRepository.save(person);
     }
 }
