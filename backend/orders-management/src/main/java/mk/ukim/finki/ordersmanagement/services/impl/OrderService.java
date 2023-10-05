@@ -5,7 +5,9 @@ import mk.ukim.finki.ordersmanagement.domain.dtos.OrderCreationDTO;
 import mk.ukim.finki.ordersmanagement.domain.models.Order;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.domain.repositories.OrderRepository;
+import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,10 @@ public class OrderService {
 
     public Optional<Order> findById(OrderId id){
         return orderRepository.findById(id);
+    }
+
+    public List<Order> findAllByUser(UserId userId){
+        return orderRepository.findAllByUserId(userId);
     }
 
     public Order create(OrderCreationDTO orderCreationDTO){

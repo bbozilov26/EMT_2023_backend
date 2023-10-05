@@ -6,6 +6,7 @@ import mk.ukim.finki.ordersmanagement.domain.dtos.OrderCreationDTO;
 import mk.ukim.finki.ordersmanagement.domain.dtos.OrderDTO;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.services.impl.OrderService;
+import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public class OrderController {
     @GetMapping("/{id}")
     public OrderDTO findById(@PathVariable OrderId id){
         return orderConverter.toOrderDTO(orderService.findById(id).get());
+    }
+
+    @GetMapping("/all/{userId}")
+    public List<OrderDTO> findAllByUser(@PathVariable UserId userId){
+        return orderConverter.toOrderDTOList(orderService.findAllByUser(userId));
     }
 
     @PostMapping("/create")

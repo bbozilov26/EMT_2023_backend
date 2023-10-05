@@ -14,7 +14,8 @@ public class SecurityConstants {
     public final static String CLAIM_AUTHORITY = "authority";
     public static final String CLAIM_USER_ID = "userId";
     public final static String CLAIM_PRIVILEGES = "privileges";
-    public final static String PRODUCTS = "/products";
-    public final static String ORDERS = "/orders";
+    public final static String PRODUCTS = "/products/**";
+    public final static String ORDERS = "/orders/**";
+    public final static String ORDERS_PRODUCTS = "/ordered-products/**";
 
 }

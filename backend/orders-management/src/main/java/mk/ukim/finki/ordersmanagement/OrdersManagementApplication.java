@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
+        "mk.ukim.finki.ordersmanagement",
         "mk.ukim.finki.usersmanagement",
         "mk.ukim.finki.productsmanagement"
 })

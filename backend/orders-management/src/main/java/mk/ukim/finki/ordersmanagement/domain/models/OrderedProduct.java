@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderedProductId;
 import mk.ukim.finki.productsmanagement.domain.models.Product;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
@@ -18,7 +19,6 @@ import java.util.List;
 @Table(name = "mm_ordered_product")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class OrderedProduct extends AbstractEntity<OrderedProductId> {
 
     private OffsetDateTime dateCreated;
@@ -30,7 +30,7 @@ public class OrderedProduct extends AbstractEntity<OrderedProductId> {
     private String description;
     private byte[] image;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mm_product_id")
     private Product product;
 
@@ -41,4 +41,8 @@ public class OrderedProduct extends AbstractEntity<OrderedProductId> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_user_id")
     private User user;
+
+    public OrderedProduct() {
+        super(OrderedProductId.randomId(OrderedProductId.class));
+    }
 }

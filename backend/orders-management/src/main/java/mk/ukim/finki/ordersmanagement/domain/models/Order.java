@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.models.enums.OrderStatus;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
+import mk.ukim.finki.productsmanagement.domain.models.ids.ProductId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 
@@ -17,7 +18,6 @@ import java.util.List;
 @Table(name = "mm_order")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class Order extends AbstractEntity<OrderId> {
 
     private OffsetDateTime dateCreated;
@@ -35,7 +35,11 @@ public class Order extends AbstractEntity<OrderId> {
     @JoinColumn(name = "ur_user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<OrderedProduct> orderedProducts;
+
+    public Order() {
+        super(OrderId.randomId(OrderId.class));
+    }
 }

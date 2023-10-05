@@ -20,9 +20,9 @@ public class OrderedProductController {
     private final OrderedProductService orderedProductService;
     private final OrderedProductConverter orderedProductConverter;
 
-    @GetMapping("/all/{id}")
-    public List<OrderedProductDTO> findAllByShoppingCartId(@PathVariable UserId id){
-        return orderedProductConverter.toDTOList(orderedProductService.findAllByUserId(id));
+    @GetMapping("/all/{userId}")
+    public List<OrderedProductDTO> findAllByShoppingCartId(@PathVariable UserId userId){
+        return orderedProductConverter.toDTOList(orderedProductService.findAllByUserId(userId));
     }
 
     @GetMapping("/{orderedProductId}/{userId}")

@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         REGISTER,
                         PRODUCTS,
                         ORDERS,
+                        ORDERS_PRODUCTS,
                         "/**"
                 )
                 .permitAll()
