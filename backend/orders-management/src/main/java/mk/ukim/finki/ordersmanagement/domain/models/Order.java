@@ -29,7 +29,7 @@ public class Order extends AbstractEntity<OrderId> {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ur_user_id")
     private User user;
 

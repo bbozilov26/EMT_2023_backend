@@ -26,7 +26,7 @@ public class OrderedProductController {
         return orderedProductConverter.toDTOListUser(orderedProductService.findAllByUserId(userId));
     }
 
-    @GetMapping("/all/{orderId}")
+    @GetMapping("/{orderId}/all")
     public List<OrderedProductDTO> findAllByShoppingCartId(@PathVariable OrderId orderId){
         return orderedProductConverter.toDTOListOrder(orderedProductService.findAllByOrderId(orderId));
     }

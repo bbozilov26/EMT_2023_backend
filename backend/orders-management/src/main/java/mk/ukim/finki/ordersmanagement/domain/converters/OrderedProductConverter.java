@@ -34,12 +34,14 @@ public class OrderedProductConverter {
     public List<OrderedProductDTO> toDTOListOrder(List<OrderOrderedProduct> orderOrderedProducts){
         return orderOrderedProducts.stream()
                 .map(oop -> toDTO(oop.getOrderedProduct()))
+                .distinct()
                 .collect(Collectors.toList());
     }
 
     public List<OrderedProductDTO> toDTOListUser(List<OrderedProduct> orderedProducts){
         return orderedProducts.stream()
                 .map(this::toDTO)
+                .distinct()
                 .collect(Collectors.toList());
     }
 }

@@ -34,7 +34,7 @@ public class OrderedProduct extends AbstractEntity<OrderedProductId> {
     @JoinColumn(name = "mm_product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ur_user_id")
     private User user;
 

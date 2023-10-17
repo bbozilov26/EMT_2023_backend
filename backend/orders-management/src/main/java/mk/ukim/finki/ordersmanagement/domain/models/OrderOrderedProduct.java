@@ -3,7 +3,6 @@ package mk.ukim.finki.ordersmanagement.domain.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderOrderedProductId;
-import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderedProductId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 
 import javax.persistence.*;

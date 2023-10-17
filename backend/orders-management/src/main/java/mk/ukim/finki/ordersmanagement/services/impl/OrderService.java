@@ -60,7 +60,8 @@ public class OrderService {
                         orderedProductService
                                 .findByIdAndUserId(orderedProductId, orderCreationDTO.getUserId()))
                 .collect(Collectors.toList());
-        setOrderedProductsForOrder(orderedProducts, order);
+        List<OrderOrderedProduct> savedOrderOrderedProducts = setOrderedProductsForOrder(orderedProducts, order);
+        order.setOrderOrderedProducts(savedOrderOrderedProducts);
 
         return fillProperties(order, orderCreationDTO);
     }
@@ -98,13 +99,16 @@ public class OrderService {
         return trackingNumber;
     }
 
-    public void setOrderedProductsForOrder(List<OrderedProduct> orderedProducts, Order order){
-        orderedProducts.forEach(orderedProduct -> {
-            OrderOrderedProduct orderOrderedProduct = new OrderOrderedProduct();
-            orderOrderedProduct.setOrderedProduct(orderedProduct);
-            orderOrderedProduct.setOrder(order);
-            orderOrderedProductRepository.save(orderOrderedProduct);
-        });
+    public List<OrderOrderedProduct> setOrderedProductsForOrder(List<OrderedProduct> orderedProducts, Order order){
+        return orderedProducts
+                .stream()
+                .map(orderedProduct -> {
+                    OrderOrderedProduct orderOrderedProduct = new OrderOrderedProduct();
+                    orderOrderedProduct.setOrderedProduct(orderedProduct);
+                    orderOrderedProduct.setOrder(order);
+                    return orderOrderedProductRepository.save(orderOrderedProduct);
+                })
+                .collect(Collectors.toList());
     }
 
     public Order cancelOrConfirmOrder(OrderId id, OrderCreationDTO orderCreationDTO){
