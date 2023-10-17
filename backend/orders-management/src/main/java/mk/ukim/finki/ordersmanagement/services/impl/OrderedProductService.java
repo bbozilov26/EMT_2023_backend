@@ -1,8 +1,11 @@
 package mk.ukim.finki.ordersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.ordersmanagement.domain.models.OrderOrderedProduct;
 import mk.ukim.finki.ordersmanagement.domain.models.OrderedProduct;
+import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderedProductId;
+import mk.ukim.finki.ordersmanagement.domain.repositories.OrderOrderedProductRepository;
 import mk.ukim.finki.ordersmanagement.domain.repositories.OrderedProductRepository;
 import mk.ukim.finki.productsmanagement.domain.models.Product;
 import mk.ukim.finki.productsmanagement.domain.models.ids.ProductId;
@@ -23,11 +26,16 @@ import java.util.Optional;
 public class OrderedProductService {
 
     private final OrderedProductRepository orderedProductRepository;
+    private final OrderOrderedProductRepository orderOrderedProductRepository;
     private final ProductService productService;
     private final UserService userService;
 
     public List<OrderedProduct> findAllByUserId(UserId userId){
         return orderedProductRepository.findAllByUserId(userId);
+    }
+
+    public List<OrderOrderedProduct> findAllByOrderId(OrderId orderId){
+        return orderOrderedProductRepository.findAllByOrderId(orderId);
     }
 
     public Optional<OrderedProduct> findById(OrderedProductId id){

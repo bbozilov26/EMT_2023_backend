@@ -28,7 +28,7 @@ public class OrderConverter {
                 order.getDescription(),
                 order.getOrderStatus(),
                 NullableUtils.getIfNotNull(order.getUser(), userConverter::toUserDTO),
-                orderedProductConverter.toDTOList(order.getOrderedProducts())
+                orderedProductConverter.toDTOListOrder(order.getOrderOrderedProducts())
         );
     }
 

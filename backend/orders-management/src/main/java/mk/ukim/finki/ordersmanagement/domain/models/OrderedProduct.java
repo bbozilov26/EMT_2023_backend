@@ -35,10 +35,6 @@ public class OrderedProduct extends AbstractEntity<OrderedProductId> {
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mm_order_id")
-    private Order order;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ur_user_id")
     private User user;
 

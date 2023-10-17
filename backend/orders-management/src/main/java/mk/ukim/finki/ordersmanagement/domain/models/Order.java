@@ -3,10 +3,8 @@ package mk.ukim.finki.ordersmanagement.domain.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.models.enums.OrderStatus;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
-import mk.ukim.finki.productsmanagement.domain.models.ids.ProductId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 
@@ -37,7 +35,7 @@ public class Order extends AbstractEntity<OrderId> {
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<OrderedProduct> orderedProducts;
+    private List<OrderOrderedProduct> orderOrderedProducts;
 
     public Order() {
         super(OrderId.randomId(OrderId.class));

@@ -3,7 +3,10 @@ package mk.ukim.finki.ordersmanagement.services.impl;
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.dtos.OrderCreationDTO;
 import mk.ukim.finki.ordersmanagement.domain.models.Order;
+import mk.ukim.finki.ordersmanagement.domain.models.OrderOrderedProduct;
+import mk.ukim.finki.ordersmanagement.domain.models.OrderedProduct;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
+import mk.ukim.finki.ordersmanagement.domain.repositories.OrderOrderedProductRepository;
 import mk.ukim.finki.ordersmanagement.domain.repositories.OrderRepository;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
@@ -15,6 +18,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +27,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
+    private final OrderedProductService orderedProductService;
+    private final OrderOrderedProductRepository orderOrderedProductRepository;
 
     private static final String ORDER_ID_PREFIX = "ORD";
     private static final String TRACKING_NUMBER_PREFIX = "TRK";
@@ -45,6 +51,16 @@ public class OrderService {
         order.setOrderId(generateOrderID());
         order.setTrackingNumber(generateTrackingNumber());
         order.setUser(userService.findById(orderCreationDTO.getUserId()).get());
+
+        orderRepository.save(order);
+
+        List<OrderedProduct> orderedProducts = orderCreationDTO.getOrderedProductIds()
+                .stream()
+                .map(orderedProductId ->
+                        orderedProductService
+                                .findByIdAndUserId(orderedProductId, orderCreationDTO.getUserId()))
+                .collect(Collectors.toList());
+        setOrderedProductsForOrder(orderedProducts, order);
 
         return fillProperties(order, orderCreationDTO);
     }
@@ -80,6 +96,15 @@ public class OrderService {
         trackingNumber += trackingNumberStr + "MK"; // Appending a country code for example
 
         return trackingNumber;
+    }
+
+    public void setOrderedProductsForOrder(List<OrderedProduct> orderedProducts, Order order){
+        orderedProducts.forEach(orderedProduct -> {
+            OrderOrderedProduct orderOrderedProduct = new OrderOrderedProduct();
+            orderOrderedProduct.setOrderedProduct(orderedProduct);
+            orderOrderedProduct.setOrder(order);
+            orderOrderedProductRepository.save(orderOrderedProduct);
+        });
     }
 
     public Order cancelOrConfirmOrder(OrderId id, OrderCreationDTO orderCreationDTO){

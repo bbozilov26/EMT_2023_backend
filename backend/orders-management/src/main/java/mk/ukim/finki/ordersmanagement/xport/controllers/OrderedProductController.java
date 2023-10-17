@@ -3,6 +3,7 @@ package mk.ukim.finki.ordersmanagement.xport.controllers;
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.converters.OrderedProductConverter;
 import mk.ukim.finki.ordersmanagement.domain.dtos.OrderedProductDTO;
+import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderedProductId;
 import mk.ukim.finki.ordersmanagement.services.impl.OrderedProductService;
 import mk.ukim.finki.productsmanagement.domain.models.ids.ProductId;
@@ -22,7 +23,12 @@ public class OrderedProductController {
 
     @GetMapping("/all/{userId}")
     public List<OrderedProductDTO> findAllByShoppingCartId(@PathVariable UserId userId){
-        return orderedProductConverter.toDTOList(orderedProductService.findAllByUserId(userId));
+        return orderedProductConverter.toDTOListUser(orderedProductService.findAllByUserId(userId));
+    }
+
+    @GetMapping("/all/{orderId}")
+    public List<OrderedProductDTO> findAllByShoppingCartId(@PathVariable OrderId orderId){
+        return orderedProductConverter.toDTOListOrder(orderedProductService.findAllByOrderId(orderId));
     }
 
     @GetMapping("/{orderedProductId}/{userId}")

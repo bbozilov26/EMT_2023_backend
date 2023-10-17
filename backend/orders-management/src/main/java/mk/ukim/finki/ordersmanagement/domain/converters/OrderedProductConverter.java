@@ -2,6 +2,7 @@ package mk.ukim.finki.ordersmanagement.domain.converters;
 
 import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.dtos.OrderedProductDTO;
+import mk.ukim.finki.ordersmanagement.domain.models.OrderOrderedProduct;
 import mk.ukim.finki.ordersmanagement.domain.models.OrderedProduct;
 import mk.ukim.finki.productsmanagement.domain.converters.ProductConverter;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,13 @@ public class OrderedProductConverter {
         );
     }
 
-    public List<OrderedProductDTO> toDTOList(List<OrderedProduct> orderedProducts){
+    public List<OrderedProductDTO> toDTOListOrder(List<OrderOrderedProduct> orderOrderedProducts){
+        return orderOrderedProducts.stream()
+                .map(oop -> toDTO(oop.getOrderedProduct()))
+                .collect(Collectors.toList());
+    }
+
+    public List<OrderedProductDTO> toDTOListUser(List<OrderedProduct> orderedProducts){
         return orderedProducts.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
