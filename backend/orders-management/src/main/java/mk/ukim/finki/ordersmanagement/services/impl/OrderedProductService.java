@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -81,11 +82,6 @@ public class OrderedProductService {
     public void removeProductFromShoppingCart(OrderedProductId orderedProductId, UserId userId){
         OrderedProduct orderedProduct = findByIdAndUserId(orderedProductId, userId);
         Integer orderedProductQuantity = orderedProduct.getQuantity();
-        User user = orderedProduct.getUser();
-        Double totalPrice = 0.0;
-        for(OrderedProduct op : findAllByUserId(userId)){
-            totalPrice += op.getTotalPrice();
-        }
 
         if(orderedProductQuantity > 0 && orderedProductQuantity != 1){
             orderedProductQuantity -= 1;
@@ -93,15 +89,17 @@ public class OrderedProductService {
             orderedProduct.setTotalPrice(orderedProductQuantity * orderedProduct.getPrice());
             orderedProduct.setDateModified(OffsetDateTime.now());
             orderedProductRepository.save(orderedProduct);
-
-            totalPrice -= orderedProduct.getPrice();
-            user.setCreditDebt(totalPrice);
-            userService.save(user);
         } else if(orderedProductQuantity == 1){
-            totalPrice -= orderedProduct.getPrice();
             orderedProductRepository.deleteById(orderedProductId);
-            user.setCreditDebt(totalPrice);
-            userService.save(user);
         }
+    }
+
+    public List<OrderedProduct> completelyRemoveProductsFromShoppingCart(List<OrderedProduct> orderedProducts){
+        return orderedProducts.stream()
+                .map(orderedProduct -> {
+                    orderedProduct.setUser(null);
+                    return orderedProductRepository.save(orderedProduct);
+                })
+                .collect(Collectors.toList());
     }
 }

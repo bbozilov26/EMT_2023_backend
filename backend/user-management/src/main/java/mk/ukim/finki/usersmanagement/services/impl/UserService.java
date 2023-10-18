@@ -54,8 +54,8 @@ public class UserService {
         return create(userDTO);
     }
 
-    public void save(User user){
-        userRepository.save(user);
+    public User save(User user){
+        return userRepository.save(user);
     }
 
     public List<User> findAll() {
@@ -100,7 +100,6 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
         user.setCreditBalance(0.0);
-        user.setCreditDebt(0.0);
         user.setStreak(0);
         user.setDateCreated(OffsetDateTime.now());
         userRepository.save(user);
@@ -162,7 +161,7 @@ public class UserService {
     }
 
     public void resetDailyCheckIns(){
-        userRepository.findAll().forEach(userDailyCheckInsService::resetDailyCheckInWeekly);
+        userRepository.findAll().forEach(userDailyCheckInsService::resetDailyCheckIn);
     }
 
 //    @Override

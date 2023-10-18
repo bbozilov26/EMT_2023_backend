@@ -2,13 +2,16 @@ package mk.ukim.finki.ordersmanagement.services.impl;
 
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.ordersmanagement.domain.dtos.OrderCreationDTO;
+import mk.ukim.finki.ordersmanagement.domain.exceptions.InsufficientCreditException;
 import mk.ukim.finki.ordersmanagement.domain.models.Order;
 import mk.ukim.finki.ordersmanagement.domain.models.OrderOrderedProduct;
 import mk.ukim.finki.ordersmanagement.domain.models.OrderedProduct;
 import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.ordersmanagement.domain.repositories.OrderOrderedProductRepository;
 import mk.ukim.finki.ordersmanagement.domain.repositories.OrderRepository;
+import mk.ukim.finki.usersmanagement.domain.models.User;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
+import mk.ukim.finki.usersmanagement.domain.repositories.UserRepository;
 import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,7 @@ public class OrderService {
 
     private static final String ORDER_ID_PREFIX = "ORD";
     private static final String TRACKING_NUMBER_PREFIX = "TRK";
+    private final UserRepository userRepository;
 
     public List<Order> findAll(){
         return orderRepository.findAll();
@@ -47,10 +51,19 @@ public class OrderService {
 
     public Order create(OrderCreationDTO orderCreationDTO){
         Order order = new Order();
+
+        User user = userService.findById(orderCreationDTO.getUserId()).get();
+        if(user.getCreditBalance() < orderCreationDTO.getTotalPrice()){
+            throw new InsufficientCreditException();
+        }
+        user.setCreditBalance(user.getCreditBalance() - orderCreationDTO.getTotalPrice());
+        user = userService.save(user);
+
         order.setDateCreated(OffsetDateTime.now());
         order.setOrderId(generateOrderID());
         order.setTrackingNumber(generateTrackingNumber());
-        order.setUser(userService.findById(orderCreationDTO.getUserId()).get());
+        order.setTotalPrice(orderCreationDTO.getTotalPrice());
+        order.setUser(user);
 
         orderRepository.save(order);
 
@@ -60,6 +73,7 @@ public class OrderService {
                         orderedProductService
                                 .findByIdAndUserId(orderedProductId, orderCreationDTO.getUserId()))
                 .collect(Collectors.toList());
+        orderedProducts = orderedProductService.completelyRemoveProductsFromShoppingCart(orderedProducts);
         List<OrderOrderedProduct> savedOrderOrderedProducts = setOrderedProductsForOrder(orderedProducts, order);
         order.setOrderOrderedProducts(savedOrderOrderedProducts);
 
@@ -72,7 +86,6 @@ public class OrderService {
 
     public Order fillProperties(Order order, OrderCreationDTO orderCreationDTO){
         order.setDateModified(OffsetDateTime.now());
-        order.setTotalPrice(orderCreationDTO.getTotalPrice());
         order.setDescription(orderCreationDTO.getDescription());
         order.setOrderStatus(orderCreationDTO.getOrderStatus());
 

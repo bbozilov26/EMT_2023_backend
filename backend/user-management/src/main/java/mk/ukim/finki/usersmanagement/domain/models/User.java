@@ -27,7 +27,6 @@ public class User extends AbstractEntity<UserId> {
     private OffsetDateTime dateModified;
     private Boolean enabled;
     private Double creditBalance;
-    private Double creditDebt;
     private Integer streak;
 
     @ManyToOne(fetch = FetchType.EAGER)

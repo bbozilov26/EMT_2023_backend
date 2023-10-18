@@ -62,18 +62,19 @@ public class UserDailyCheckInsService {
         return userDailyCheckInsRepository.save(userDailyCheckIn);
     }
 
-    public void resetDailyCheckInWeekly(User user){
-        List<UserDailyCheckIn> userDailyCheckIns = userDailyCheckInsRepository.findAllByUserId(user.getId());
-        UserDailyCheckIn firstDailyCheckIn = userDailyCheckIns.stream()
-                .filter(userDailyCheckIn ->
-                        userDailyCheckIn.getClaimed() &&
-                                userDailyCheckIn.getDailyCheckIn().getLabel().equals(DailyCheckInConstants.MONDAY))
-                .findFirst()
-                .get();
+    public void resetDailyCheckIn(User user){
+        List<UserDailyCheckIn> userDailyCheckIns = userDailyCheckInsRepository.findAllByUserIdAndClaimedIsTrueOrderedByDateModifiedDesc(user);
+        UserDailyCheckIn lastClaimedDailyCheckIn = userDailyCheckIns != null && !userDailyCheckIns.isEmpty() ?
+                userDailyCheckIns.get(0) : null;
 
-        if(ChronoUnit.DAYS.between(firstDailyCheckIn.getDateModified().toLocalDate(), OffsetDateTime.now().toLocalDate()) == 7){
-            userDailyCheckInsRepository.deleteAllById(userDailyCheckIns.stream().map(UserDailyCheckIn::getId).collect(Collectors.toList()));
-            bindWithUser(user);
+        if(lastClaimedDailyCheckIn != null) {
+            if (ChronoUnit.DAYS.between(lastClaimedDailyCheckIn.getDateModified().toLocalDate(), OffsetDateTime.now().toLocalDate()) > 1) {
+                userDailyCheckInsRepository.deleteAllById(userDailyCheckInsRepository.findAllByUserId(user.getId())
+                        .stream()
+                        .map(UserDailyCheckIn::getId)
+                        .collect(Collectors.toList()));
+                bindWithUser(user);
+            }
         }
 
 //        return userDailyCheckIns;
