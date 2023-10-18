@@ -7,6 +7,7 @@ import mk.ukim.finki.ordersmanagement.domain.models.ids.OrderId;
 import mk.ukim.finki.usersmanagement.domain.dtos.UserDTO;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public class OrderDTO {
     private final OrderStatus orderStatus;
     private final UserDTO userDTO;
     private final List<OrderedProductDTO> orderedProductDTOs;
+    private final String carrier;
+    private final LocalDate ETA;
 }

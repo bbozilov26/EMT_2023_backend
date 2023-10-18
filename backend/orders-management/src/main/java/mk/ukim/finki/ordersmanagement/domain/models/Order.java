@@ -9,6 +9,7 @@ import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.usersmanagement.domain.models.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class Order extends AbstractEntity<OrderId> {
     private String orderId;
     private String trackingNumber;
     private String description;
+    private String carrier;
+    private LocalDate ETA;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

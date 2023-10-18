@@ -15,4 +15,6 @@ public class OrderCreationDTO {
     private String description;
     private OrderStatus orderStatus;
     private UserId userId;
+    private String carrier;
+    private Long ETA;
 }
