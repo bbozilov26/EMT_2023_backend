@@ -17,6 +17,8 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -50,23 +52,34 @@ public class OrderService {
         return orderRepository.findAllByUserId(userId);
     }
 
-    public Order create(OrderCreationDTO orderCreationDTO){
+    public Order create(OrderCreationDTO orderCreationDTO) throws ParseException {
         Order order = new Order();
 
         User user = userService.findById(orderCreationDTO.getUserId()).get();
         if(user.getCreditBalance() < orderCreationDTO.getTotalPrice()){
             throw new InsufficientCreditException();
         }
-        user.setCreditBalance(user.getCreditBalance() - orderCreationDTO.getTotalPrice());
+        double creditBalance = user.getCreditBalance();
+        double totalPrice = orderCreationDTO.getTotalPrice();
+        double difference = creditBalance - totalPrice;
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String formattedDifferenceString = decimalFormat.format(difference);
+        Double formattedDifference = decimalFormat.parse(formattedDifferenceString).doubleValue();
+        user.setCreditBalance(formattedDifference);
         user = userService.save(user);
 
-        order.setDateCreated(OffsetDateTime.now());
+        OffsetDateTime dateCreated = OffsetDateTime.now();
+        order.setDateCreated(dateCreated);
         order.setOrderId(generateOrderID());
         order.setTrackingNumber(generateTrackingNumber());
         order.setTotalPrice(orderCreationDTO.getTotalPrice());
         order.setUser(user);
         order.setCarrier(orderCreationDTO.getCarrier());
-        order.setETA(LocalDate.now().plusDays(orderCreationDTO.getETA()));
+
+        Integer daysToAdd = orderCreationDTO.getEta();
+        LocalDate dateCreatedLD = dateCreated.toLocalDate();
+        LocalDate ETA = dateCreatedLD.plusDays(daysToAdd);
+        order.setETA(ETA);
 
         orderRepository.save(order);
 

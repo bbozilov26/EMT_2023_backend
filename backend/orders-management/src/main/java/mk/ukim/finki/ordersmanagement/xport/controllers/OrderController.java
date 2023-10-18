@@ -9,6 +9,7 @@ import mk.ukim.finki.ordersmanagement.services.impl.OrderService;
 import mk.ukim.finki.usersmanagement.domain.models.ids.UserId;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public OrderDTO create(@RequestBody OrderCreationDTO orderCreationDTO){
+    public OrderDTO create(@RequestBody OrderCreationDTO orderCreationDTO) throws ParseException {
         return orderConverter.toOrderDTO(orderService.create(orderCreationDTO));
     }
 

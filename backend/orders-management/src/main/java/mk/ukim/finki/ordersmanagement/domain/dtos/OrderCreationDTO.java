@@ -16,5 +16,5 @@ public class OrderCreationDTO {
     private OrderStatus orderStatus;
     private UserId userId;
     private String carrier;
-    private Long ETA;
+    private Integer eta;
 }
