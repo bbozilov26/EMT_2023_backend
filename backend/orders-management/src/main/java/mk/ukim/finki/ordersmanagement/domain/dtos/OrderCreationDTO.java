@@ -12,7 +12,6 @@ import java.util.List;
 public class OrderCreationDTO {
     private List<OrderedProductId> orderedProductIds;
     private Double totalPrice;
-    private String description;
     private OrderStatus orderStatus;
     private UserId userId;
     private String carrier;

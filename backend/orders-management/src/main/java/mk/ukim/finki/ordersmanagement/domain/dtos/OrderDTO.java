@@ -20,7 +20,6 @@ public class OrderDTO {
     private final Double totalPrice;
     private final String orderId;
     private final String trackingNumber;
-    private final String description;
     private final OrderStatus orderStatus;
     private final UserDTO userDTO;
     private final List<OrderedProductDTO> orderedProductDTOs;

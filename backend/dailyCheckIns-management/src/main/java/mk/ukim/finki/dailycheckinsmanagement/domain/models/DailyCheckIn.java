@@ -13,11 +13,14 @@ import javax.persistence.*;
 @Table(name = "mm_daily_check_in")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class DailyCheckIn extends AbstractEntity<DailyCheckInId> {
 
     private Double dailyReward;
     private String label;
     private String description;
+
+    public DailyCheckIn(){
+        super(DailyCheckInId.randomId(DailyCheckInId.class));
+    }
 
 }

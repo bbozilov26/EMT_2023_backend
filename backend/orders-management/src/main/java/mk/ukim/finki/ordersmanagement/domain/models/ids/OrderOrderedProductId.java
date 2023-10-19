@@ -7,7 +7,7 @@ import mk.ukim.finki.sharedkernel.domain.base.DomainObjectId;
 public class OrderOrderedProductId extends DomainObjectId {
 
     public OrderOrderedProductId() {
-        super(ProductId.randomId(OrderOrderedProductId.class).getId());
+        super(OrderOrderedProductId.randomId(OrderOrderedProductId.class).getId());
     }
 
     public OrderOrderedProductId(@NonNull String uuid) {

@@ -102,7 +102,6 @@ public class OrderService {
 
     public Order fillProperties(Order order, OrderCreationDTO orderCreationDTO){
         order.setDateModified(OffsetDateTime.now());
-        order.setDescription(orderCreationDTO.getDescription());
         order.setOrderStatus(orderCreationDTO.getOrderStatus());
 
         return orderRepository.save(order);

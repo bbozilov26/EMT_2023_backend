@@ -25,7 +25,6 @@ public class OrderConverter {
                 order.getTotalPrice(),
                 order.getOrderId(),
                 order.getTrackingNumber(),
-                order.getDescription(),
                 order.getOrderStatus(),
                 NullableUtils.getIfNotNull(order.getUser(), userConverter::toUserDTO),
                 orderedProductConverter.toDTOListOrder(order.getOrderOrderedProducts()),

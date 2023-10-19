@@ -6,7 +6,7 @@ import mk.ukim.finki.sharedkernel.domain.base.DomainObjectId;
 public class PersonId extends DomainObjectId {
 
     public PersonId() {
-        super(UserId.randomId(PersonId.class).getId());
+        super(PersonId.randomId(PersonId.class).getId());
     }
 
     public PersonId(@NonNull String uuid) {

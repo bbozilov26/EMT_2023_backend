@@ -25,7 +25,6 @@ public class Order extends AbstractEntity<OrderId> {
     private Double totalPrice;
     private String orderId;
     private String trackingNumber;
-    private String description;
     private String carrier;
     private LocalDate ETA;
 
