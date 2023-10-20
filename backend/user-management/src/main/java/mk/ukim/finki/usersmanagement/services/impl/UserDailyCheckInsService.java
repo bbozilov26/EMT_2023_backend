@@ -74,6 +74,7 @@ public class UserDailyCheckInsService {
                         .map(UserDailyCheckIn::getId)
                         .collect(Collectors.toList()));
                 bindWithUser(user);
+                user.setStreak(0);
             }
         }
 

@@ -163,7 +163,6 @@ public class UserService {
     public void resetDailyCheckIns(){
         userRepository.findAll().forEach(user -> {
             userDailyCheckInsService.resetDailyCheckIn(user);
-            user.setStreak(0);
             userRepository.save(user);
         });
     }
