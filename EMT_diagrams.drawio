@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-08T12:49:53.498Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="wE-0Lie1IVFpSg68SuuT" version="22.0.8" type="github" pages="7">
+<mxfile host="app.diagrams.net" modified="2023-11-08T12:51:40.074Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="49R78IS7EOVM9tgipd_Y" version="22.0.8" type="github" pages="7">
   <diagram name="userroles" id="rasDofUEgk2x8Y9_TUdu">
     <mxGraphModel dx="1434" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -386,13 +386,13 @@
           <mxGeometry y="30" width="190" height="140" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-62" value="Topic:&lt;br&gt;- History&lt;br&gt;- Art&lt;br&gt;- Computer Science&lt;br&gt;- Math&lt;br&gt;- Geography" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="1330" y="150" width="190" height="110" as="geometry" />
+          <mxGeometry x="1360" y="130" width="190" height="110" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-63" value="Difficulty:&lt;br&gt;- Easy&lt;br&gt;- Medium&lt;br&gt;- Hard" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="1330" y="330" width="190" height="110" as="geometry" />
+          <mxGeometry x="1360" y="310" width="190" height="110" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-64" value="mm_quiz_question" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
-          <mxGeometry x="960" y="230" width="290" height="140" as="geometry" />
+          <mxGeometry x="990" y="210" width="290" height="140" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-65" value="+ id: varchar(255), PK&#xa;+ topic: varchar(255)), enum&#xa;+ difficulty: varchar(255), enum&#xa;+ reward: double precision&#xa;+ question: varchar(255)&#xa;+ correct_answer_id: varchar(255), FK, NOT NULL " style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="3UISk8kXOPDm2upiqxVx-64">
           <mxGeometry y="30" width="290" height="110" as="geometry" />
@@ -404,20 +404,20 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-68" value="mm_quiz_answer" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1027.5" y="600" width="155" height="75" as="geometry" />
+          <mxGeometry x="1057.5" y="580" width="155" height="75" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-69" value="+ id: varchar(255), PK&#xa;+ desciption: varchar(255)" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="3UISk8kXOPDm2upiqxVx-68">
           <mxGeometry y="30" width="155" height="45" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endArrow=ERmany;endFill=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3UISk8kXOPDm2upiqxVx-65" target="3UISk8kXOPDm2upiqxVx-85">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1080" y="430" as="targetPoint" />
+            <mxPoint x="1110" y="410" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-71" value="mm_daily_check_in" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
           <mxGeometry x="60" y="770" width="240" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="3UISk8kXOPDm2upiqxVx-72" value="+ id: long, PK&#xa;+ daily_reward: double precision&#xa;+ label: varchar(200)&#xa;+ description: varchar(200)" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="3UISk8kXOPDm2upiqxVx-71">
+        <mxCell id="3UISk8kXOPDm2upiqxVx-72" value="+ id: varchar(255), PK&#xa;+ daily_reward: double precision&#xa;+ label: varchar(200)&#xa;+ description: varchar(200)" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="3UISk8kXOPDm2upiqxVx-71">
           <mxGeometry y="30" width="240" height="80" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-73" value="mm_user_daily_check_ins" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
@@ -453,15 +453,15 @@
           <mxGeometry x="800" y="710" width="190" height="110" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-85" value="mm_quiz_question_answer" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
-          <mxGeometry x="950" y="435" width="310" height="100" as="geometry" />
+          <mxGeometry x="980" y="415" width="310" height="100" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-86" value="+ id: varchar(255), PK&#xa;+ mm_quiz_question_id: varchar(255), FK, NOT NULL&#xa;+ mm_quiz_answer_id: varchar(255), FK, NOT NULL" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="3UISk8kXOPDm2upiqxVx-85">
           <mxGeometry y="30" width="310" height="70" as="geometry" />
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-87" value="" style="fontSize=12;html=1;endArrow=ERmany;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="3UISk8kXOPDm2upiqxVx-68" target="3UISk8kXOPDm2upiqxVx-86">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
-            <mxPoint x="1300" y="610" as="sourcePoint" />
-            <mxPoint x="1400" y="510" as="targetPoint" />
+            <mxPoint x="1330" y="590" as="sourcePoint" />
+            <mxPoint x="1430" y="490" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="3UISk8kXOPDm2upiqxVx-88" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=ERmany;endFill=0;" edge="1" parent="1" source="GllyrpBJlqWzjVARXqvU-10" target="3UISk8kXOPDm2upiqxVx-74">
