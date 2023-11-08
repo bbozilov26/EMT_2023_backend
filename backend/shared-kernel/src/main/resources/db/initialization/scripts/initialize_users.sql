@@ -51,10 +51,12 @@ end
 
 $$ language plpgsql;
 
-select create_user_if_not_exists('superadmin@emt.io','$2a$12$jg1BFg9nPNh6CGvs8aLH8uctGdWrQFQYvQtZm3mza8OjXHWJv/rdi','EMT', 'Super Admin', '070000000', 'Orce Nikolov 202, 2/61, 1020, Skopje, North Macedonia'
-                                 find_role_id_by_name('ROLE_SUPER_ADMIN'), null, null, null);
-select create_user_if_not_exists('admin@emt.io','$2a$12$HOv3AukHWA7m.1pdDYuvXODuU2lq4c4GU4rveqLWHDS7v8zDYTERy','EMT', 'Admin', '071000000', 'Orce Nikolov 202, 2/61, 1020, Skopje, North Macedonia'
-                                 find_role_id_by_name('ROLE_ADMIN'), null, null, null);
+select create_user_if_not_exists('superadmin@emt.io','$2a$12$jg1BFg9nPNh6CGvs8aLH8uctGdWrQFQYvQtZm3mza8OjXHWJv/rdi','EMT', 'Super Admin', '070000000',
+                                 'Orce Nikolov 202, 2/61, 1020, Skopje, North Macedonia',
+                                 find_role_id_by_name('ROLE_SUPER_ADMIN'), array[]::text[], null, null);
+select create_user_if_not_exists('admin@emt.io','$2a$12$HOv3AukHWA7m.1pdDYuvXODuU2lq4c4GU4rveqLWHDS7v8zDYTERy','EMT', 'Admin', '071000000',
+                                 'Orce Nikolov 202, 2/61, 1020, Skopje, North Macedonia',
+                                 find_role_id_by_name('ROLE_ADMIN'), array[]::text[], null, null);
 -- select create_user_if_not_exists('customer@emt.io','$2a$12$pKQiFD9LtQBCZwswOCRUZe.Q2yXRsMmfprZf7YkdZ0LKPdSI/5XiG','EMT', 'Customer', '072000000',
 --                                  find_role_id_by_name('ROLE_CUSTOMER'), array['DAY_1', 'DAY_2', 'DAY_3', 'DAY_4', 'DAY_5', 'DAY_6', 'DAY_7'], 0.0, 0);
 
