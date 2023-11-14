@@ -9,8 +9,10 @@ import mk.ukim.finki.dailycheckinsmanagement.domain.repositories.DailyCheckInsRe
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,7 +22,10 @@ public class DailyCheckInsService {
     private final DailyCheckInsRepository dailyCheckInsRepository;
 
     public List<DailyCheckIn> findAll(){
-        return dailyCheckInsRepository.findAll();
+        return dailyCheckInsRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(DailyCheckIn::getLabel))
+                .collect(Collectors.toList());
     }
 
     public Optional<DailyCheckIn> findById(DailyCheckInId id){
