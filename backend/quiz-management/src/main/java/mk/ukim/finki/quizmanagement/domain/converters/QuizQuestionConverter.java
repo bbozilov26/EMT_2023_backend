@@ -6,8 +6,10 @@ import mk.ukim.finki.quizmanagement.domain.dtos.QuizQuestionDTO;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestionAnswer;
 import mk.ukim.finki.sharedkernel.utils.NullableUtils;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +19,10 @@ public class QuizQuestionConverter {
 
     private final QuizAnswerConverter quizAnswerConverter;
 
+    @Transactional
     public QuizQuestionDTO toDTO(QuizQuestion quizQuestion){
+        Hibernate.initialize(quizQuestion.getCorrectQuizAnswer().getQuizAnswer());
+
         return new QuizQuestionDTO(
                 quizQuestion.getId(),
                 quizQuestion.getQuestion(),

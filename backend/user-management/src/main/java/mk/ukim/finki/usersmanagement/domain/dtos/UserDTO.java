@@ -15,6 +15,7 @@ public class UserDTO {
     private final Boolean enabled;
     private final Double creditBalance;
     private final Integer streak;
+    private final Boolean answeredQotD;
     private final PersonDTO personDTO;
     private final RoleDTO roleDTO;
 //    private final List<UserDailyCheckInDTO> userDailyCheckIns;

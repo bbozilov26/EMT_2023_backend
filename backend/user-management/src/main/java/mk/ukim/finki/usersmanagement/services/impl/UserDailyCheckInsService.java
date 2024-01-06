@@ -78,6 +78,8 @@ public class UserDailyCheckInsService {
             }
         }
 
+        user.setAnsweredQotD(false);
+
 //        return userDailyCheckIns;
     }
 

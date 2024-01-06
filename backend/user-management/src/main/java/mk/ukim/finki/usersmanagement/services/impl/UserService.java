@@ -101,6 +101,7 @@ public class UserService {
         user.setEnabled(true);
         user.setCreditBalance(0.0);
         user.setStreak(0);
+        user.setAnsweredQotD(false);
         user.setDateCreated(OffsetDateTime.now());
         userRepository.save(user);
 

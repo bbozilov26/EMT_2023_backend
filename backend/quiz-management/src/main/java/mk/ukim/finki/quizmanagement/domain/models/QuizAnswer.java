@@ -12,9 +12,11 @@ import javax.persistence.*;
 @Table(name = "mm_quiz_answer")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class QuizAnswer extends AbstractEntity<QuizAnswerId> {
 
     private String description;
 
+    public QuizAnswer() {
+        super(QuizAnswerId.randomId(QuizAnswerId.class));
+    }
 }

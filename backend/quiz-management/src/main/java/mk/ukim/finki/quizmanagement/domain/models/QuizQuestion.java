@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.quizmanagement.domain.models.enums.Difficulty;
 import mk.ukim.finki.quizmanagement.domain.models.enums.Topic;
+import mk.ukim.finki.quizmanagement.domain.models.ids.QuizAnswerId;
 import mk.ukim.finki.quizmanagement.domain.models.ids.QuizQuestionId;
 import mk.ukim.finki.sharedkernel.domain.base.AbstractEntity;
 
@@ -16,7 +17,6 @@ import java.util.List;
 @Table(name = "mm_quiz_question")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class QuizQuestion extends AbstractEntity<QuizQuestionId> {
 
     private String question;
@@ -28,11 +28,15 @@ public class QuizQuestion extends AbstractEntity<QuizQuestionId> {
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "correct_mm_quiz_answer_id")
     private QuizQuestionAnswer correctQuizAnswer;
 
-    @OneToMany(mappedBy = "quizQuestion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "quizQuestion", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<QuizQuestionAnswer> quizQuestionAnswers;
+
+    public QuizQuestion() {
+        super(QuizQuestionId.randomId(QuizQuestionId.class));
+    }
 }

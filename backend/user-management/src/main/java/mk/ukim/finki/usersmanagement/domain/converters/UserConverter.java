@@ -24,6 +24,7 @@ public class UserConverter {
                 user.getEnabled(),
                 user.getCreditBalance(),
                 user.getStreak(),
+                user.getAnsweredQotD(),
                 personConverter.toPersonDTO(user.getPerson()),
                 roleConverter.toRoleDTO(user.getRole())
 //                userDailyCheckInsConverter.toDTOList(user.getUserDailyCheckIns())

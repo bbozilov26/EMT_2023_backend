@@ -28,6 +28,7 @@ public class User extends AbstractEntity<UserId> {
     private Boolean enabled;
     private Double creditBalance;
     private Integer streak;
+    private Boolean answeredQotD;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ur_person_id")

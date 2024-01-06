@@ -16,10 +16,7 @@ import mk.ukim.finki.usersmanagement.services.impl.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -69,24 +66,39 @@ public class QuizQuestionService {
         quizQuestionRepository.deleteById(id);
     }
 
-    public void submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
-        Double quizReward = 0.0;
+    public User submitQuiz(QuizGivenAnswersDTO quizGivenAnswersDTO){
+        Double quizReward = -5.0;
 
-        for (Map.Entry<QuizQuestionDTO, QuizAnswerDTO> entry : quizGivenAnswersDTO.getQuizMap().entrySet()){
-            QuizQuestionDTO quizQuestionDTO = entry.getKey();
-            QuizQuestion quizQuestion = quizQuestionRepository.findByQuestion(quizQuestionDTO.getQuestion());
+        QuizQuestion quizQuestion = quizQuestionRepository.findById(quizGivenAnswersDTO.getQuestionId()).isPresent() ?
+                quizQuestionRepository.findById(quizGivenAnswersDTO.getQuestionId()).get() : null;
 
-            QuizAnswerDTO quizAnswerDTO = entry.getValue();
-            QuizQuestionAnswer quizQuestionAnswer = quizQuestionAnswerService.findByQuestionAndAnswer(quizQuestion, quizAnswerDTO);
+        if(quizQuestion != null) {
+            String correctAnswerId = quizQuestion.getCorrectQuizAnswer().getQuizAnswer().getId().getId();
+            if(quizGivenAnswersDTO.getAnswerId() != null) {
+                String givenAnswerId = quizGivenAnswersDTO.getAnswerId().getId();
 
-            if(quizQuestion.getCorrectQuizAnswer().equals(quizQuestionAnswer)){
-                quizReward += quizQuestion.getReward();
+                if (correctAnswerId.equals(givenAnswerId)) {
+                    quizReward += Math.abs(quizReward) + quizQuestion.getReward();
+                }
             }
         }
 
         User user = userService.findById(quizGivenAnswersDTO.getUserId()).get();
         user.setCreditBalance(user.getCreditBalance() + quizReward);
+        user.setAnsweredQotD(true);
 
-        userService.save(user);
+        return userService.save(user);
+    }
+
+    public QuizQuestion getRandom(){
+        List<QuizQuestion> quizQuestions = this.findAll();
+        long totalQuestions = quizQuestions.size();
+        int randomIndex = new Random().nextInt((int) totalQuestions);
+
+        return quizQuestions.get(randomIndex);
+    }
+
+    public List<QuizAnswer> getAllAnswersByQuestionId(QuizQuestionId questionId) {
+        return quizQuestionAnswerService.getAllAnswersByQuestionId(questionId);
     }
 }

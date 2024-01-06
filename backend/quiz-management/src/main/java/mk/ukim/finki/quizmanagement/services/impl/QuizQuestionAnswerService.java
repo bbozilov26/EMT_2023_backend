@@ -6,9 +6,14 @@ import mk.ukim.finki.quizmanagement.domain.dtos.QuizAnswerDTO;
 import mk.ukim.finki.quizmanagement.domain.models.QuizAnswer;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestion;
 import mk.ukim.finki.quizmanagement.domain.models.QuizQuestionAnswer;
+import mk.ukim.finki.quizmanagement.domain.models.ids.QuizAnswerId;
+import mk.ukim.finki.quizmanagement.domain.models.ids.QuizQuestionId;
 import mk.ukim.finki.quizmanagement.domain.repositories.QuizQuestionAnswerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -40,5 +45,12 @@ public class QuizQuestionAnswerService {
     public QuizQuestionAnswer findByQuestionAndAnswer(QuizQuestion question, QuizAnswerDTO answerDTO){
         QuizAnswer quizAnswer = quizAnswerService.findByDescription(answerDTO.getDescription());
         return quizQuestionAnswerRepository.findByQuizQuestionAndQuizAnswer(question, quizAnswer);
+    }
+
+    public List<QuizAnswer> getAllAnswersByQuestionId (QuizQuestionId questionId) {
+        return quizQuestionAnswerRepository.findAllByQuizQuestionId(questionId)
+                .stream()
+                .map(QuizQuestionAnswer::getQuizAnswer)
+                .collect(Collectors.toList());
     }
 }
