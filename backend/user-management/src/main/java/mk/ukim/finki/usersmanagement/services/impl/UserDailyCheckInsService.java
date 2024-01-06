@@ -63,24 +63,24 @@ public class UserDailyCheckInsService {
     }
 
     public void resetDailyCheckIn(User user){
-        List<UserDailyCheckIn> userDailyCheckIns = userDailyCheckInsRepository.findAllByUserIdAndClaimedIsTrueOrderedByDateModifiedDesc(user);
-        UserDailyCheckIn lastClaimedDailyCheckIn = userDailyCheckIns != null && !userDailyCheckIns.isEmpty() ?
-                userDailyCheckIns.get(0) : null;
+        if (user.getRole().getLabel().equals("ROLE_CUSTOMER")) {
+            List<UserDailyCheckIn> userDailyCheckIns = userDailyCheckInsRepository.findAllByUserIdAndClaimedIsTrueOrderedByDateModifiedDesc(user);
+            UserDailyCheckIn lastClaimedDailyCheckIn = userDailyCheckIns != null && !userDailyCheckIns.isEmpty() ?
+                    userDailyCheckIns.get(0) : null;
 
-        if(lastClaimedDailyCheckIn != null) {
-            if (ChronoUnit.DAYS.between(lastClaimedDailyCheckIn.getDateModified().toLocalDate(), OffsetDateTime.now().toLocalDate()) > 1) {
-                userDailyCheckInsRepository.deleteAllById(userDailyCheckInsRepository.findAllByUserId(user.getId())
-                        .stream()
-                        .map(UserDailyCheckIn::getId)
-                        .collect(Collectors.toList()));
-                bindWithUser(user);
-                user.setStreak(0);
+            if(lastClaimedDailyCheckIn != null) {
+                if (ChronoUnit.DAYS.between(lastClaimedDailyCheckIn.getDateModified().toLocalDate(), OffsetDateTime.now().toLocalDate()) > 1) {
+                    userDailyCheckInsRepository.deleteAllById(userDailyCheckInsRepository.findAllByUserId(user.getId())
+                            .stream()
+                            .map(UserDailyCheckIn::getId)
+                            .collect(Collectors.toList()));
+                    bindWithUser(user);
+                    user.setStreak(0);
+                }
             }
+
+            user.setAnsweredQotD(false);
         }
-
-        user.setAnsweredQotD(false);
-
-//        return userDailyCheckIns;
     }
 
     public List<UserDailyCheckIn> findAllClaimedByUser(User user){
