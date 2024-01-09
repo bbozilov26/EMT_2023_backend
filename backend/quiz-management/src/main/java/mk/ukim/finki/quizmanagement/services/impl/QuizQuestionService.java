@@ -51,13 +51,13 @@ public class QuizQuestionService {
 
         quizQuestionRepository.save(quizQuestion);
 
-        quizQuestion.setCorrectQuizAnswer(quizQuestionAnswerService.getOrCreate(quizQuestion, quizQuestionDTO.getCorrectQuizAnswerDTO()));
-
         List<QuizQuestionAnswer> quizQuestionAnswers = new ArrayList<>();
         quizQuestionDTO.getQuizAnswerDTOs().forEach(quizAnswerDTO ->
                 quizQuestionAnswers.add(quizQuestionAnswerService.getOrCreate(quizQuestion, quizAnswerDTO))
         );
         quizQuestion.setQuizQuestionAnswers(quizQuestionAnswers);
+
+        quizQuestion.setCorrectQuizAnswer(quizQuestionAnswerService.getOrCreate(quizQuestion, quizQuestionDTO.getCorrectQuizAnswerDTO()));
 
         return quizQuestionRepository.save(quizQuestion);
     }
